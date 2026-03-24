@@ -1,0 +1,58 @@
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+
+    environment:
+      DATABASE_URL: 'postgresql://postgres:postgres@db:5432/Cart?schema=public'
+
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+
+    ports:
+      - '3000:3000'
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    networks:
+      - backend_network
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: Cart
+
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+    networks:
+      - backend_network
+
+volumes:
+  db_data:
+
+networks:
+  backend_network:
+    driver: bridge
