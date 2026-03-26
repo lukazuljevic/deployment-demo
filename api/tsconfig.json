@@ -26,7 +26,8 @@
       "@decorators/*": ["src/common/decorators/*"],
       "@guards/*": ["src/common/guards/*"],
       "@interceptors/*": ["src/common/interceptors/*"],
-      "@middleware/*": ["src/common/middleware/*"]
+      "@middleware/*": ["src/common/middleware/*"],
+      "@filters/*": ["src/common/filters/*"]
     }
   }
 }

@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
-import ResponseMessage from './response-message.decorator';
+import { ResponseMessage } from './response-message.decorator';
 
 export const ApiOkMessage = (message: string) => {
   return applyDecorators(ResponseMessage(message), ApiOkResponse({ description: message }));

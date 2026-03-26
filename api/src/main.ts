@@ -1,3 +1,5 @@
+import { AllExceptionsFilter } from '@filters/http-exception.filter';
+import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -21,6 +23,8 @@ async function bootstrap() {
   app.use(helmet());
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalInterceptors(app.get(ResponseInterceptor));
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Cart API')
