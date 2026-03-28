@@ -1,3 +1,4 @@
+import { RolesAuth } from '@decorators/auth.decorator';
 import { OptionalTokenGuard } from '@guards/optional-token.guard';
 import {
   Body,
@@ -12,7 +13,8 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
 import { SwaggerPaginatedApiResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
@@ -25,7 +27,9 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @RolesAuth(Role.ADMIN)
   @Post()
+  @ApiCreatedResponse({ description: 'Returns id if product is successfuly created' })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }

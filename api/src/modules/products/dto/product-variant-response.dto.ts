@@ -11,7 +11,7 @@ export class ProductVariantResponseDto {
     description: 'Shirt size (if product is clothing)',
     enum: ShirtSize,
   })
-  size?: ShirtSize;
+  shirtSize?: ShirtSize;
 
   @ApiPropertyOptional({
     description: 'Shirt size (if product is shoes)',

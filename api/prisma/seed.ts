@@ -1,5 +1,6 @@
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient, ProductType, ShirtSize } from '@prisma/client';
+import { PrismaClient, ProductType, Role, ShirtSize } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({
@@ -8,6 +9,20 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
+  const passwordHash = await bcrypt.hash('Admin123!', 10);
+
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@example.com' },
+    update: {},
+    create: {
+      email: 'admin@example.com',
+      password: passwordHash,
+      firstName: 'Admin',
+      lastName: 'User',
+      role: Role.ADMIN,
+    },
+  });
+
   const category = await prisma.category.create({
     data: {
       name: 'Clothing',
@@ -27,8 +42,8 @@ async function main() {
       },
       variants: {
         create: [
-          { size: ShirtSize.M, stock: 5 },
-          { size: ShirtSize.L, stock: 5 },
+          { shirtSize: ShirtSize.M, stock: 5 },
+          { shirtSize: ShirtSize.L, stock: 5 },
         ],
       },
     },

@@ -4,9 +4,9 @@ export class ProductImageResponseDto {
   @ApiProperty()
   id: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Image URL' })
   url: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: 'Color associated with image' })
   color?: string;
 }

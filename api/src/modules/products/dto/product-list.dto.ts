@@ -11,7 +11,7 @@ export class ProductListDto {
   @ApiProperty()
   price: number;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'If user marks product as favorite this field will be true' })
   isFavorite: boolean;
 
   @ApiProperty({ type: [ProductImageResponseDto] })

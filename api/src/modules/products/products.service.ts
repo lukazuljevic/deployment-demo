@@ -1,10 +1,11 @@
 import { SortOrder } from '@enums/sort-order.enum';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma, ProductVariant } from '@prisma/client';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma, ProductType, ProductVariant } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
 import { paginate } from '@utils/paginate.util';
 import { PaginatedResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
+import { CreateProductResponseDto } from './dto/create-product.response.dto';
 import { FindProductsDto } from './dto/find-products.dto';
 import { ProductListDto } from './dto/product-list.dto';
 import { ProductResponseDto } from './dto/product-response.dto';
@@ -24,8 +25,39 @@ type ProductWithRelations = Prisma.ProductGetPayload<{
 export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  async create(dto: CreateProductDto): Promise<CreateProductResponseDto> {
+    const { variants, images, ...otherFields } = dto;
+
+    for (const v of variants) {
+      if (dto.type === ProductType.CLOTHING && v.shoeSize !== undefined)
+        throw new BadRequestException('Clothing products cannot have shoe size in variants');
+
+      if (dto.type === ProductType.SHOES && v.shirtSize !== undefined)
+        throw new BadRequestException('Shoe products cannot have shirt size in variants');
+    }
+
+    return this.prisma.product.create({
+      data: {
+        ...otherFields,
+        variants: {
+          create: variants.map((v) => ({
+            shirtSize: v.shirtSize ?? undefined,
+            shoeSize: v.shoeSize ?? undefined,
+            stock: v.stock,
+          })),
+        },
+        images: {
+          create: images.map((img) => ({
+            url: img.url,
+            color: img.color ?? undefined,
+          })),
+        },
+      },
+      include: {
+        variants: true,
+        images: true,
+      },
+    });
   }
 
   async findProducts(
