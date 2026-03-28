@@ -1,6 +1,6 @@
 import { SortOrder } from '@enums/sort-order.enum';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, ProductVariant } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
 import { paginate } from '@utils/paginate.util';
 import { PaginatedResponse } from 'src/common/response/paginated-response.dto';
@@ -10,11 +10,13 @@ import { ProductListDto } from './dto/product-list.dto';
 import { ProductResponseDto } from './dto/product-response.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import mapToImageDto from './helpers/map-to-image-dto.helper';
+import mapToVariantDto from './helpers/map-to-variant-dto.helper';
 
 type ProductWithRelations = Prisma.ProductGetPayload<{
   include: {
     images: true;
     favorites: true;
+    variants: true;
   };
 }>;
 
@@ -35,8 +37,8 @@ export class ProductsService {
     if (query.search) where.name = { contains: query.search, mode: 'insensitive' };
     const orderBy = { name: query.sortOrder || SortOrder.ASC };
 
-    if (query.inStock === true) where.stock = { gt: 0 };
-    else if (query.inStock === false) where.stock = { lte: 0 };
+    if (query.inStock === true) where.variants = { some: { stock: { gt: 0 } } };
+    else if (query.inStock === false) where.variants = { none: { stock: { gt: 0 } } };
 
     if (query.categoryId) where.categoryId = query.categoryId;
 
@@ -46,7 +48,7 @@ export class ProductsService {
       orderBy,
       page: query.pageNumber,
       limit: query.limit,
-      include: { images: true, favorites: userId ? { where: { userId } } : false },
+      include: { images: true, variants: true, favorites: userId ? { where: { userId } } : false },
     });
 
     let favoriteIds = new Set<string>();
@@ -68,6 +70,7 @@ export class ProductsService {
       price: Number(p.price),
       images: p.images.map((img) => mapToImageDto(img)),
       isFavorite: favoriteIds.has(p.id),
+      variants: p.variants.map((v: ProductVariant) => mapToVariantDto(v)),
     }));
 
     return {
@@ -79,7 +82,7 @@ export class ProductsService {
   async findOne(productId: string, userId: string): Promise<ProductResponseDto> {
     const product = await this.prisma.product.findUnique({
       where: { id: productId },
-      include: { images: true },
+      include: { images: true, variants: true },
     });
 
     if (!product) throw new NotFoundException(`Product with ${productId} not found`);
@@ -97,18 +100,18 @@ export class ProductsService {
       isFavorite = !!favorite;
     }
 
+    const variants = product.variants.map((v: ProductVariant) => mapToVariantDto(v));
+
     return {
       id: product.id,
       name: product.name,
       price: Number(product.price),
       description: product.description,
       brand: product.brand,
-      stock: product.stock,
       type: product.type,
-      shirtSize: product.shirtSize ?? undefined,
-      shoeSize: product.shoeSize ?? undefined,
       images: product.images.map((img) => mapToImageDto(img)),
       isFavorite,
+      variants,
     };
   }
 

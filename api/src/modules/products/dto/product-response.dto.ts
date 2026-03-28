@@ -1,6 +1,7 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ProductType, ShirtSize } from '@prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
+import { ProductType } from '@prisma/client';
 import { ProductListDto } from './product-list.dto';
+import { ProductVariantResponseDto } from './product-variant-response.dto';
 
 export class ProductResponseDto extends ProductListDto {
   @ApiProperty({ description: 'Full product description' })
@@ -9,15 +10,12 @@ export class ProductResponseDto extends ProductListDto {
   @ApiProperty({ description: 'Brand of the product' })
   brand: string;
 
-  @ApiProperty({ description: 'Stock available for the product' })
-  stock: number;
-
   @ApiProperty({ description: 'Product type (CLOTHING, SHOES)', enum: ProductType })
   type: ProductType;
 
-  @ApiPropertyOptional({ description: 'Shirt size if applicable', enum: ShirtSize })
-  shirtSize?: ShirtSize;
-
-  @ApiPropertyOptional({ description: 'Shoe size if applicable' })
-  shoeSize?: number;
+  @ApiProperty({
+    type: [ProductVariantResponseDto],
+    description: 'Available product variants (sizes, stock)',
+  })
+  variants: ProductVariantResponseDto[];
 }

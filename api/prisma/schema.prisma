@@ -77,21 +77,30 @@ model Product{
   description String
   brand String
   price Decimal @db.Decimal(10,2)
-  stock Int @default(1)
 
   categoryId String
   category Category @relation(fields: [categoryId],references: [id])
 
   type ProductType
-  shirtSize ShirtSize? 
-  shoeSize Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt  
 
+  variants ProductVariant[]
   images ProductImage[]
   favorites Favorite[]
   orderItems OrderItem[]
+}
+
+model ProductVariant{
+  id String @id @default(uuid())
+  productId String
+  product Product @relation(fields: [productId],references: [id])
+  size ShirtSize?
+  shoeSize Int?
+  stock Int @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt  
 }
 
 model ProductImage{

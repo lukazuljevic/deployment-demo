@@ -1,11 +1,14 @@
 import { RegisterRequestDto } from '@auth/dto/register-request.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
-import { UserWithRelations } from '@tstypes/user';
 import { ProfileResponseDto } from './dto/profile-response.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import mapToDto from './helpers/map-to-dto.helper';
+
+export type UserWithRelations = Prisma.UserGetPayload<{
+  include: { address: true; card: true };
+}>;
 
 @Injectable()
 export class UsersService {

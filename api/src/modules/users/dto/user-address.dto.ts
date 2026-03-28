@@ -1,24 +1,26 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UserAddressDto {
-  @ApiPropertyOptional({ description: 'Street address' })
-  @IsOptional()
+  @ApiProperty({ description: 'Street address' })
   @IsString()
+  @IsNotEmpty({ message: 'Street cannot be empty' })
   street: string;
 
-  @ApiPropertyOptional({ description: 'City' })
-  @IsOptional()
+  @ApiProperty({ description: 'City' })
   @IsString()
+  @IsNotEmpty({ message: 'City cannot be empty' })
   city: string;
 
-  @ApiPropertyOptional({ description: 'ZIP / Postal code' })
-  @IsOptional()
+  @ApiProperty({ description: 'ZIP / Postal code' })
   @IsString()
+  @IsNotEmpty({ message: 'ZIP code cannot be empty' })
   zipcode: string;
 
-  @ApiPropertyOptional({ description: 'Country' })
-  @IsOptional()
+  @ApiProperty({ description: 'Country' })
   @IsString()
+  @IsNotEmpty({ message: 'Country cannot be empty' })
   country: string;
 }
+
+export class UpdateUserAddressDto extends PartialType(UserAddressDto) {}

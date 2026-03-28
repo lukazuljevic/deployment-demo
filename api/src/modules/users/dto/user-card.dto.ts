@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { IsNotExpired } from '@validators/expiry-date.validator';
 import { IsInt, IsOptional, Length, Matches, Max, Min, Validate } from 'class-validator';
 
@@ -29,3 +29,5 @@ export class UserCardDto {
   @Validate(IsNotExpired)
   _expiryCheck?: any;
 }
+
+export class UpdateUserCardDto extends PartialType(UserCardDto) {}

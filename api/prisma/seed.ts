@@ -1,5 +1,5 @@
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient, ProductType } from '@prisma/client';
+import { PrismaClient, ProductType, ShirtSize } from '@prisma/client';
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({
@@ -14,21 +14,27 @@ async function main() {
     },
   });
 
-  await prisma.product.create({
+  const product = await prisma.product.create({
     data: {
       name: 'Cool T-Shirt',
       description: 'Super udoban T-shirt za svakodnevno nošenje',
       brand: 'BrandX',
       price: 29.99,
-      stock: 10,
       categoryId: category.id,
       type: ProductType.CLOTHING,
-      shirtSize: 'M',
       images: {
         create: [{ url: 'https://example.com/images/cool-tshirt.jpg', color: 'blue' }],
       },
+      variants: {
+        create: [
+          { size: ShirtSize.M, stock: 5 },
+          { size: ShirtSize.L, stock: 5 },
+        ],
+      },
     },
   });
+
+  console.log('Seeded product:', product);
 }
 
 main()

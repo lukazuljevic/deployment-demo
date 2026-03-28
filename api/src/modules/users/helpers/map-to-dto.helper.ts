@@ -1,4 +1,5 @@
-import { UserWithRelations } from '@tstypes/user';
+import { UserWithRelations } from '@users/users.service';
+import { omit } from 'lodash';
 
 const mapToDto = (user: UserWithRelations) => {
   return {
@@ -7,8 +8,8 @@ const mapToDto = (user: UserWithRelations) => {
     firstName: user.firstName,
     lastName: user.lastName,
     avatarUrl: user.avatarUrl ?? undefined,
-    address: user.address!,
-    card: user.card!,
+    address: omit(user.address, ['userId']),
+    card: omit(user.card, ['userId']),
   };
 };
 

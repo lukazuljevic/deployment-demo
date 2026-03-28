@@ -2,8 +2,8 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsValidName } from '@validators/name.validator';
 import { Type } from 'class-transformer';
 import { IsOptional, IsUrl, ValidateNested } from 'class-validator';
-import { UserAddressDto } from './user-address.dto';
-import { UserCardDto } from './user-card.dto';
+import { UpdateUserAddressDto } from './user-address.dto';
+import { UpdateUserCardDto } from './user-card.dto';
 
 export class UpdateProfileDto {
   @ApiPropertyOptional()
@@ -21,15 +21,15 @@ export class UpdateProfileDto {
   @IsUrl()
   avatarUrl?: string;
 
-  @ApiPropertyOptional({ type: () => UserAddressDto })
+  @ApiPropertyOptional({ type: () => UpdateUserAddressDto })
   @IsOptional()
   @ValidateNested()
-  @Type(() => UserAddressDto)
-  address?: UserAddressDto;
+  @Type(() => UpdateUserAddressDto)
+  address?: UpdateUserAddressDto;
 
-  @ApiPropertyOptional({ type: () => UserCardDto })
+  @ApiPropertyOptional({ type: () => UpdateUserCardDto })
   @IsOptional()
   @ValidateNested()
-  @Type(() => UserCardDto)
-  card?: UserCardDto;
+  @Type(() => UpdateUserCardDto)
+  card?: UpdateUserCardDto;
 }
