@@ -17,6 +17,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { UsersController } from './modules/users/users.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
+import { FavoritesModule } from './modules/favorites/favorites.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { PrismaService } from './prisma/prisma.service';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'web', 'dist'),
     }),
+    FavoritesModule,
   ],
   controllers: [AppController, UsersController],
   providers: [

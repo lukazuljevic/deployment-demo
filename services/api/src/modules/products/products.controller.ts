@@ -15,10 +15,11 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
+import { ActionResponseDto } from 'src/common/dto/common';
 import { SwaggerPaginatedApiResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
-import { ProductActionResponseDto, ProductListDto, ProductResponseDto } from './dto/response.dto';
+import { ProductListDto, ProductResponseDto } from './dto/response.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
 
@@ -30,7 +31,7 @@ export class ProductsController {
   @Post()
   @ApiCreatedResponse({
     description: 'Returns id if product is successfuly created',
-    type: () => ProductActionResponseDto,
+    type: () => ActionResponseDto,
   })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
@@ -65,7 +66,7 @@ export class ProductsController {
   @Put(':id')
   @ApiOkResponse({
     description: 'Returns id if product is successfuly updated',
-    type: () => ProductActionResponseDto,
+    type: () => ActionResponseDto,
   })
   update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateProductDto) {
     return this.productsService.update(id, dto);
@@ -75,7 +76,7 @@ export class ProductsController {
   @Delete(':id')
   @ApiOkResponse({
     description: 'Returns id if product is successfuly deleted',
-    type: () => ProductActionResponseDto,
+    type: () => ActionResponseDto,
   })
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.productsService.remove(id);

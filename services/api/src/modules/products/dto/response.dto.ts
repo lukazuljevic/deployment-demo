@@ -1,14 +1,6 @@
 import { ProductType, ShirtSize } from '@cart-app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class ProductActionResponseDto {
-  @ApiProperty({ description: 'Created product id' })
-  id: string;
-
-  @ApiPropertyOptional({ description: 'Description of the performed action' })
-  message?: string;
-}
-
 export class ProductImageResponseDto {
   @ApiProperty()
   id: string;

@@ -30,6 +30,7 @@
       "@pipes/*": ["src/common/pipes/*"],
       "@config/*": ["src/common/config/*"],
       "@constants/*": ["src/common/constants/*"],
+      "@response/*": ["src/common/response/*"],
       "@guards/*": ["src/common/guards/*"],
       "@interceptors/*": ["src/common/interceptors/*"],
       "@middleware/*": ["src/common/middleware/*"],
@@ -38,7 +39,8 @@
       "@tstypes/*": ["src/common/types/*"],
       "@validators/*": ["src/common/validators/*"],
       "@users/*": ["src/modules/users/*"],
-      "@auth/*": ["src/modules/auth/*"]
+      "@auth/*": ["src/modules/auth/*"],
+      "@products/*": ["src/modules/products/*"]
     },
   }
 }

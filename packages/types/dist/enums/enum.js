@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShirtSize = exports.ProductType = void 0;
+exports.SortOrder = exports.ShirtSize = exports.ProductType = void 0;
 var ProductType;
 (function (ProductType) {
     ProductType["CLOTHING"] = "CLOTHING";
@@ -17,3 +17,8 @@ var ShirtSize;
     ShirtSize["XXL"] = "XXL";
     ShirtSize["XXXL"] = "XXXL";
 })(ShirtSize || (exports.ShirtSize = ShirtSize = {}));
+var SortOrder;
+(function (SortOrder) {
+    SortOrder["ASC"] = "ASC";
+    SortOrder["DESC"] = "DESC";
+})(SortOrder || (exports.SortOrder = SortOrder = {}));

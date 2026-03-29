@@ -1,21 +1,20 @@
 import { ProductType } from '@cart-app/types';
 import { SortOrder } from '@enums/sort-order.enum';
+import { mapProductDetails, mapProductList } from '@helpers/map-to-product-dto.helper';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma, ProductVariant } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
 import { paginate } from '@utils/paginate.util';
+import { ActionResponseDto } from 'src/common/dto/common';
 import { PaginatedResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
-import { ProductActionResponseDto, ProductListDto, ProductResponseDto } from './dto/response.dto';
+import { ProductListDto, ProductResponseDto } from './dto/response.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import mapToImageDto from './helpers/map-to-image-dto.helper';
-import mapToVariantDto from './helpers/map-to-variant-dto.helper';
 
-type ProductWithRelations = Prisma.ProductGetPayload<{
+export type ProductWithRelations = Prisma.ProductGetPayload<{
   include: {
     images: true;
-    favorites: true;
     variants: true;
   };
 }>;
@@ -24,7 +23,7 @@ type ProductWithRelations = Prisma.ProductGetPayload<{
 export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreateProductDto): Promise<ProductActionResponseDto> {
+  async create(dto: CreateProductDto): Promise<ActionResponseDto> {
     const { variants, images, ...otherFields } = dto;
 
     for (const v of variants) {
@@ -61,7 +60,7 @@ export class ProductsService {
     return { id: product.id, message: 'Product created successfully' };
   }
 
-  async update(productId: string, dto: UpdateProductDto): Promise<ProductActionResponseDto> {
+  async update(productId: string, dto: UpdateProductDto): Promise<ActionResponseDto> {
     const { variants, images, ...otherFields } = dto;
 
     const existingProduct = await this.prisma.product.findUnique({
@@ -148,15 +147,8 @@ export class ProductsService {
       favoriteIds = new Set(favorites.map((f) => f.productId));
     }
 
-    const resultsWithFavorite = paginated.results.map((p: ProductWithRelations) => ({
-      id: p.id,
-      name: p.name,
-      price: Number(p.price),
-      images: p.images.map((img) => mapToImageDto(img)),
-      ...(userId ? { isFavorite: favoriteIds.has(p.id) } : {}),
-      variants: p.variants.map((v: ProductVariant) => mapToVariantDto(v)),
-    }));
-
+    const resultsWithFavorite = paginated.results.map((p: ProductWithRelations) => mapProductList(p,favoriteIds.has(p.id)));
+    
     return {
       ...paginated,
       results: resultsWithFavorite,
@@ -184,22 +176,10 @@ export class ProductsService {
       isFavorite = !!favorite;
     }
 
-    const variants = product.variants.map((v: ProductVariant) => mapToVariantDto(v));
-
-    return {
-      id: product.id,
-      name: product.name,
-      price: Number(product.price),
-      description: product.description,
-      brand: product.brand,
-      type: product.type as ProductType,
-      images: product.images.map((img) => mapToImageDto(img)),
-      ...(userId ? { isFavorite } : {}),
-      variants,
-    };
+    return mapProductDetails(product,isFavorite);
   }
 
-  async remove(productId: string): Promise<ProductActionResponseDto> {
+  async remove(productId: string): Promise<ActionResponseDto> {
     const deletedProduct = await this.prisma.product.delete({
       where: { id: productId },
     });

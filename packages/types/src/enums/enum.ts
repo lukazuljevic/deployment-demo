@@ -12,3 +12,8 @@ export enum ShirtSize{
   XXL = "XXL",
   XXXL = "XXXL"
 }
+
+export enum SortOrder{
+  ASC="ASC",
+  DESC="DESC",
+}
