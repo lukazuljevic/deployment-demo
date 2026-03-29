@@ -1,4 +1,5 @@
 import { AllExceptionsFilter } from '@filters/http-exception.filter';
+import { PrismaExceptionFilter } from '@filters/prisma-exception.filter';
 import { ResponseInterceptor } from '@interceptors/response.interceptor';
 import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -8,17 +9,20 @@ import { TrimPipe } from '@pipes/trim.pipe';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
-function mapValidationErrors(errors: ValidationError[]): any {
-  const result = {};
-  errors.forEach((error) => {
-    if (error.children && error.children.length > 0) {
-      console.log(error.children);
-      result[error.property] = mapValidationErrors(error.children);
-    } else {
-      result[error.property] = Object.values(error.constraints || {});
-    }
-  });
-  return result;
+function mapValidationErrors(errors: ValidationError[], parentPath?: string): Record<string, any> {
+  return errors.reduce(
+    (result, error) => {
+      const path = parentPath ? `${parentPath}.${error.property}` : error.property;
+      if (error.children && error.children.length > 0) {
+        Object.assign(result, mapValidationErrors(error.children, path));
+      } else {
+        result[path] = Object.values(error.constraints || {});
+      }
+
+      return result;
+    },
+    {} as Record<string, string[]>,
+  );
 }
 
 async function bootstrap() {
@@ -51,7 +55,7 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(app.get(ResponseInterceptor));
-  app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new PrismaExceptionFilter(), new AllExceptionsFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Cart API')

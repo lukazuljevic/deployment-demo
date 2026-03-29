@@ -18,7 +18,7 @@ import { Role } from '@prisma/client';
 import { SwaggerPaginatedApiResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
-import { CreateProductResponseDto, ProductListDto, ProductResponseDto } from './dto/response.dto';
+import { ProductActionResponseDto, ProductListDto, ProductResponseDto } from './dto/response.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
 
@@ -30,7 +30,7 @@ export class ProductsController {
   @Post()
   @ApiCreatedResponse({
     description: 'Returns id if product is successfuly created',
-    type: () => CreateProductResponseDto,
+    type: () => ProductActionResponseDto,
   })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
@@ -64,15 +64,20 @@ export class ProductsController {
   @RolesAuth(Role.ADMIN)
   @Put(':id')
   @ApiOkResponse({
-    description: 'Returns id if product is successfuly created',
-    type: () => CreateProductResponseDto,
+    description: 'Returns id if product is successfuly updated',
+    type: () => ProductActionResponseDto,
   })
   update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateProductDto) {
     return this.productsService.update(id, dto);
   }
 
+  @RolesAuth(Role.ADMIN)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  @ApiOkResponse({
+    description: 'Returns id if product is successfuly deleted',
+    type: () => ProductActionResponseDto,
+  })
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.productsService.remove(id);
   }
 }

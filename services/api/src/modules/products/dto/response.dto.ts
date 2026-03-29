@@ -1,9 +1,12 @@
 import { ProductType, ShirtSize } from '@cart-app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class CreateProductResponseDto {
+export class ProductActionResponseDto {
   @ApiProperty({ description: 'Created product id' })
   id: string;
+
+  @ApiPropertyOptional({ description: 'Description of the performed action' })
+  message?: string;
 }
 
 export class ProductImageResponseDto {
@@ -52,8 +55,8 @@ export class ProductListDto {
   @ApiProperty()
   price: number;
 
-  @ApiProperty({ description: 'If user marks product as favorite this field will be true' })
-  isFavorite: boolean;
+  @ApiPropertyOptional({ description: 'If user marks product as favorite this field will be true' })
+  isFavorite?: boolean;
 
   @ApiProperty({ type: () => [ProductImageResponseDto] })
   images: ProductImageResponseDto[];

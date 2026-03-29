@@ -1,8 +1,9 @@
 
 import { ProductType, ShirtSize } from "../enums/enum";
 
-export interface CreateProductResponseDto {
+export interface ProductActionResponseDto {
   id: string;
+  response: string;
 }
 
 export interface ProductImageResponseDto {

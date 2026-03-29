@@ -7,7 +7,7 @@ import { paginate } from '@utils/paginate.util';
 import { PaginatedResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
-import { CreateProductResponseDto, ProductListDto, ProductResponseDto } from './dto/response.dto';
+import { ProductActionResponseDto, ProductListDto, ProductResponseDto } from './dto/response.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import mapToImageDto from './helpers/map-to-image-dto.helper';
 import mapToVariantDto from './helpers/map-to-variant-dto.helper';
@@ -24,7 +24,7 @@ type ProductWithRelations = Prisma.ProductGetPayload<{
 export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreateProductDto): Promise<CreateProductResponseDto> {
+  async create(dto: CreateProductDto): Promise<ProductActionResponseDto> {
     const { variants, images, ...otherFields } = dto;
 
     for (const v of variants) {
@@ -58,15 +58,14 @@ export class ProductsService {
       },
     });
 
-    return { id: product.id };
+    return { id: product.id, message: 'Product created successfully' };
   }
 
-  async update(productId: string, dto: UpdateProductDto): Promise<CreateProductResponseDto> {
+  async update(productId: string, dto: UpdateProductDto): Promise<ProductActionResponseDto> {
     const { variants, images, ...otherFields } = dto;
 
     const existingProduct = await this.prisma.product.findUnique({
       where: { id: productId },
-      include: { variants: true, images: true },
     });
 
     if (!existingProduct) throw new NotFoundException(`Product with id ${productId} not found`);
@@ -111,7 +110,7 @@ export class ProductsService {
       include: { variants: true, images: true },
     });
 
-    return updatedProduct;
+    return { id: updatedProduct.id, message: 'Product created successfully' };
   }
   async findProducts(
     query: FindProductsDto,
@@ -154,7 +153,7 @@ export class ProductsService {
       name: p.name,
       price: Number(p.price),
       images: p.images.map((img) => mapToImageDto(img)),
-      isFavorite: favoriteIds.has(p.id),
+      ...(userId ? { isFavorite: favoriteIds.has(p.id) } : {}),
       variants: p.variants.map((v: ProductVariant) => mapToVariantDto(v)),
     }));
 
@@ -195,12 +194,19 @@ export class ProductsService {
       brand: product.brand,
       type: product.type as ProductType,
       images: product.images.map((img) => mapToImageDto(img)),
-      isFavorite,
+      ...(userId ? { isFavorite } : {}),
       variants,
     };
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} product`;
+  async remove(productId: string): Promise<ProductActionResponseDto> {
+    const deletedProduct = await this.prisma.product.delete({
+      where: { id: productId },
+    });
+
+    return {
+      id: deletedProduct.id,
+      message: 'Product deleted successfully',
+    };
   }
 }
