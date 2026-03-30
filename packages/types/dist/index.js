@@ -15,9 +15,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./dto/auth-dto"), exports);
+__exportStar(require("./dto/order-dto"), exports);
 __exportStar(require("./dto/product-dto"), exports);
 __exportStar(require("./dto/user-dto"), exports);
 __exportStar(require("./enums/enum"), exports);
 __exportStar(require("./validation/isNotExpired"), exports);
+__exportStar(require("./validation/order"), exports);
 __exportStar(require("./validation/product"), exports);
 __exportStar(require("./validation/user"), exports);

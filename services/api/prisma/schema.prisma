@@ -40,6 +40,20 @@ enum AddressType{
   SHIPPING
 }
 
+enum ProductColor {
+  RED
+  BLUE
+  GREEN
+  BLACK
+  WHITE
+  YELLOW
+  GRAY
+  ORANGE
+  PURPLE
+  VIOLET
+  CYAN
+}
+
 model User{
   id String @id @default(uuid())
   email String @unique
@@ -75,6 +89,9 @@ model Address{
   city String
   country String
   zipcode String
+
+  billingOrders Order[] @relation("BillingOrder")
+  shippingOrders Order[] @relation("ShippingOrder")
 }
 
 model Product{
@@ -113,7 +130,7 @@ model ProductImage{
   id String @id @default(uuid())
   productId String
   url String
-  color String?
+  color ProductColor?
   product Product @relation(fields: [productId],references: [id],onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt  
@@ -143,13 +160,13 @@ model Order{
   id String @id @default(uuid())
   userId String
   user User @relation(fields: [userId],references:[id])
-
   totalPrice Decimal @db.Decimal(10,2)
+  status OrderStatus @default(PENDING)
+  billingAddressId  String
+  shippingAddressId String
 
-  shippingStreet  String
-  shippingCity    String
-  shippingCountry String
-  shippingZipcode String
+  billingAddress Address @relation("BillingOrder", fields: [billingAddressId], references: [id])
+  shippingAddress Address @relation("ShippingOrder", fields: [shippingAddressId], references: [id])
 
   items OrderItem[]
 
@@ -166,7 +183,6 @@ model OrderItem{
   variantId String
   productVariant ProductVariant @relation(fields: [variantId],references:[id])
 
-  status OrderStatus
   quantity Int
   price Decimal @db.Decimal(10,2)
 

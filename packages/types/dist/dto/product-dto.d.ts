@@ -1,8 +1,8 @@
-import { ProductType, ShirtSize, SortOrder } from "../enums/enum";
+import { ProductColor, ProductType, ShirtSize, SortOrder } from "../enums/enum";
 export interface ProductImageResponseDto {
     id: string;
     url: string;
-    color?: string;
+    color?: ProductColor;
 }
 export interface ProductVariantResponseDto {
     id: string;

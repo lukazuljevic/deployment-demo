@@ -1,4 +1,4 @@
-import { ProductType, ShirtSize } from '@cart-app/types';
+import { ProductColor, ProductType, ShirtSize } from '@cart-app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class ProductImageResponseDto {
@@ -9,7 +9,7 @@ export class ProductImageResponseDto {
   url: string;
 
   @ApiPropertyOptional({ description: 'Color associated with image' })
-  color?: string;
+  color?: ProductColor;
 }
 
 export class ProductVariantResponseDto {

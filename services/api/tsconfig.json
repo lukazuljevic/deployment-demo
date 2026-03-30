@@ -40,7 +40,9 @@
       "@validators/*": ["src/common/validators/*"],
       "@users/*": ["src/modules/users/*"],
       "@auth/*": ["src/modules/auth/*"],
-      "@products/*": ["src/modules/products/*"]
-    },
+      "@products/*": ["src/modules/products/*"],
+      "@mails/*": ["src/modules/mails/*"],
+      "@orders/*": ["src/modules/orders/*"]
+    }
   }
 }

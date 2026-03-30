@@ -6,6 +6,7 @@ import {
   MIN_PRICE,
   MIN_SHOE_SIZE,
   MIN_STOCK_NUMBER,
+  ProductColor,
   ProductType,
   ShirtSize,
 } from '@cart-app/types';
@@ -58,9 +59,9 @@ export class CreateProductImageDto {
   @IsUrl()
   url: string;
 
-  @ApiPropertyOptional({ description: 'Color associated with image' })
+  @ApiPropertyOptional({ description: 'Color associated with image', enum: ProductColor })
   @IsOptional()
-  @IsString()
+  @IsEnum(ProductColor)
   color?: string;
 }
 

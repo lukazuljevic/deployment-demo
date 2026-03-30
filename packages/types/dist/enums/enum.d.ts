@@ -19,3 +19,16 @@ export declare enum AddressType {
     SHIPPING = "SHIPPING",
     BILLING = "BILLING"
 }
+export declare enum ProductColor {
+    RED = "RED",
+    BLUE = "BLUE",
+    GREEN = "GREEN",
+    BLACK = "BLACK",
+    WHITE = "WHITE",
+    YELLOW = "YELLOW",
+    GRAY = "GRAY",
+    ORANGE = "ORANGE",
+    PURPLE = "PURPLE",
+    VIOLET = "VIOLET",
+    CYAN = "CYAN"
+}

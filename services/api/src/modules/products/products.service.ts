@@ -1,4 +1,4 @@
-import { ProductType } from '@cart-app/types';
+import { ProductColor, ProductType } from '@cart-app/types';
 import { SortOrder } from '@enums/sort-order.enum';
 import { mapProductDetails, mapProductList } from '@helpers/map-to-product-dto.helper';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
@@ -47,7 +47,7 @@ export class ProductsService {
         images: {
           create: images.map((img) => ({
             url: img.url,
-            color: img.color,
+            color: img.color as ProductColor,
           })),
         },
       },
@@ -100,7 +100,7 @@ export class ProductsService {
                 where: { id: img.id, productId },
                 data: {
                   url: img.url,
-                  color: img.color,
+                  color: img.color as ProductColor,
                 },
               })),
             }
@@ -146,11 +146,11 @@ export class ProductsService {
 
       favoriteIds = new Set(favorites.map((f) => f.productId));
     }
-    
+
     const resultsWithFavorite = paginated.results.map((p: ProductWithRelations) =>
-      mapProductList(p, userId ? favoriteIds.has(p.id) : undefined)
+      mapProductList(p, userId ? favoriteIds.has(p.id) : undefined),
     );
-    
+
     return {
       ...paginated,
       results: resultsWithFavorite,
@@ -178,7 +178,7 @@ export class ProductsService {
       isFavorite = !!favorite;
     }
 
-    return mapProductDetails(product,userId ? isFavorite: undefined);
+    return mapProductDetails(product, userId ? isFavorite : undefined);
   }
 
   async remove(productId: string): Promise<ActionResponseDto> {
