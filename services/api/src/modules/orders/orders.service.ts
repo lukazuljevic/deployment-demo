@@ -6,7 +6,9 @@ import { UsersService } from '@users/users.service';
 import { ActionResponseDto } from 'src/common/dto/common';
 import { MailsService } from '../mails/mails.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { FindOrdersDto } from './dto/find-orders.dto';
+import { OrderListDto, OrderUpdateResponseDto } from './dto/response.dto';
+import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 
 @Injectable()
 export class OrdersService {
@@ -15,6 +17,7 @@ export class OrdersService {
     private readonly users: UsersService,
     private readonly mail: MailsService,
   ) {}
+
   async create(userId: string, dto: CreateOrderDto): Promise<ActionResponseDto> {
     const user = await this.users.findOneByid(userId);
 
@@ -96,19 +99,40 @@ export class OrdersService {
     return { message: 'Order successfully created', id: order.id };
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll({ orderStatus }: FindOrdersDto): Promise<OrderListDto[]> {
+    const orders = await this.prisma.order.findMany({
+      where: orderStatus ? { status: orderStatus } : undefined,
+      include: {
+        user: true,
+        shippingAddress: true,
+      },
+    });
+    return orders.map((o) => ({
+      id: o.id,
+      totalPrice: Number(o.totalPrice),
+      status: o.status,
+      createdAt: o.createdAt,
+      user: {
+        email: o.user.email,
+        firstName: o.user.firstName,
+        lastName: o.user.lastName,
+      },
+      shippingAddress: {
+        street: o.shippingAddress.street,
+        city: o.shippingAddress.city,
+        zipcode: o.shippingAddress.zipcode,
+        country: o.shippingAddress.country,
+        type: o.shippingAddress.type,
+      },
+    }));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
-  }
+  async update(orderId: string, { status }: UpdateOrderStatusDto): Promise<OrderUpdateResponseDto> {
+    const updated = await this.prisma.order.update({
+      where: { id: orderId },
+      data: { status },
+    });
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+    return { message: 'Order status updated', id: updated.id, status: updated.status };
   }
 }

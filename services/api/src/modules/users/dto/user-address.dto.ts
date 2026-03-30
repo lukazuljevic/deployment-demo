@@ -1,5 +1,5 @@
-import { AddressType } from '@cart-app/types';
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import { AddressType } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsNumberString, IsString, IsUUID } from 'class-validator';
 
 export class UserAddressDto {
@@ -22,10 +22,10 @@ export class UserAddressDto {
   @IsString()
   @IsNotEmpty({ message: 'Country cannot be empty' })
   country: string;
-  
+
   @ApiProperty({ enum: AddressType })
   @IsEnum(AddressType)
-  type: AddressType;   
+  type: AddressType;
 }
 
 export class UpdateUserAddressDto extends OmitType(PartialType(UserAddressDto), ['type'] as const) {

@@ -1,11 +1,13 @@
 import { RolesAuth } from '@decorators/auth.decorator';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
-import { ApiCreatedResponse } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Req } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import type { RequestWithJwtUser } from '@tstypes/request-types';
 import { ActionResponseDto } from 'src/common/dto/common';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { FindOrdersDto } from './dto/find-orders.dto';
+import { OrderListDto, OrderUpdateResponseDto } from './dto/response.dto';
+import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { OrdersService } from './orders.service';
 
 @Controller('orders')
@@ -23,23 +25,22 @@ export class OrdersController {
     return this.ordersService.create(userId, createOrderDto);
   }
 
+  @RolesAuth(Role.ADMIN)
   @Get()
-  findAll() {
-    return this.ordersService.findAll();
+  @ApiOkResponse({
+    description: 'Returns orders of all users',
+    type: () => OrderListDto,
+  })
+  findAll(@Body() dto: FindOrdersDto) {
+    return this.ordersService.findAll(dto);
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ordersService.remove(+id);
+  @RolesAuth(Role.ADMIN)
+  @Patch(':id/status')
+  @ApiOkResponse({
+    description: 'Returns id and new status of updated order',
+    type: () => OrderUpdateResponseDto,
+  })
+  findOne(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateOrderStatusDto) {
+    return this.ordersService.update(id, dto);
   }
 }

@@ -1,4 +1,4 @@
-import { ProductColor, ProductType } from '@cart-app/types';
+import { ProductType } from '@cart-app/types';
 import { SortOrder } from '@enums/sort-order.enum';
 import { mapProductDetails, mapProductList } from '@helpers/map-to-product-dto.helper';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
@@ -47,7 +47,7 @@ export class ProductsService {
         images: {
           create: images.map((img) => ({
             url: img.url,
-            color: img.color as ProductColor,
+            color: img.color,
           })),
         },
       },
@@ -100,7 +100,7 @@ export class ProductsService {
                 where: { id: img.id, productId },
                 data: {
                   url: img.url,
-                  color: img.color as ProductColor,
+                  color: img.color,
                 },
               })),
             }

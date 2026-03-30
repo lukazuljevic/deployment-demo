@@ -57,7 +57,7 @@ export class MailsService {
             .join('')}
         </tbody>
       </table>
-      <p><strong>Total Price: $${dto.totalPrice}</strong></p>
+      <p><strong style="font-size: 22px">Total Price: $${dto.totalPrice}</strong></p>
     `;
 
     await this.transporter.sendMail({

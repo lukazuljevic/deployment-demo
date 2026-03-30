@@ -1,4 +1,4 @@
-import { AddressType } from '@cart-app/types';
+import { AddressType } from '@prisma/client';
 
 export function AreAddressTypesUnique(types: AddressType[]) {
   const uniqueTypes = new Set(types);

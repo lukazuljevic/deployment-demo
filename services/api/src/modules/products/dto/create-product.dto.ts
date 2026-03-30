@@ -6,11 +6,9 @@ import {
   MIN_PRICE,
   MIN_SHOE_SIZE,
   MIN_STOCK_NUMBER,
-  ProductColor,
-  ProductType,
-  ShirtSize,
 } from '@cart-app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ProductColor, ProductType, ShirtSize } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
@@ -62,7 +60,7 @@ export class CreateProductImageDto {
   @ApiPropertyOptional({ description: 'Color associated with image', enum: ProductColor })
   @IsOptional()
   @IsEnum(ProductColor)
-  color?: string;
+  color?: ProductColor;
 }
 
 export class CreateProductDto {
