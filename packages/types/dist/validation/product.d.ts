@@ -1,9 +1,0 @@
-export declare const MIN_SHOE_SIZE = 30;
-export declare const MAX_SHOE_SIZE = 50;
-export declare const MIN_DESC_LENGTH = 10;
-export declare const MAX_DESC_LENGTH = 500;
-export declare const MIN_STOCK_NUMBER = 0;
-export declare const MIN_PRICE = 0.5;
-export declare const MIN_ARRAY_SIZE = 1;
-export declare const MIN_PAGE_NUMBER = 1;
-export declare const MIN_PAGE_LIMIT = 4;

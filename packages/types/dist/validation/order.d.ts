@@ -1,1 +1,0 @@
-export declare const MIN_CART_ITEMS_NUM = 1;
