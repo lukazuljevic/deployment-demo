@@ -1,5 +1,6 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumberString, IsString } from 'class-validator';
+import { AddressType } from '@cart-app/types';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import { IsEnum, IsNotEmpty, IsNumberString, IsString, IsUUID } from 'class-validator';
 
 export class UserAddressDto {
   @ApiProperty({ description: 'Street address' })
@@ -21,6 +22,14 @@ export class UserAddressDto {
   @IsString()
   @IsNotEmpty({ message: 'Country cannot be empty' })
   country: string;
+  
+  @ApiProperty({ enum: AddressType })
+  @IsEnum(AddressType)
+  type: AddressType;   
 }
 
-export class UpdateUserAddressDto extends PartialType(UserAddressDto) {}
+export class UpdateUserAddressDto extends OmitType(PartialType(UserAddressDto), ['type'] as const) {
+  @ApiProperty({ description: 'Id of user address which you want to update' })
+  @IsUUID()
+  id: string;
+}

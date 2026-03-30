@@ -146,8 +146,10 @@ export class ProductsService {
 
       favoriteIds = new Set(favorites.map((f) => f.productId));
     }
-
-    const resultsWithFavorite = paginated.results.map((p: ProductWithRelations) => mapProductList(p,favoriteIds.has(p.id)));
+    
+    const resultsWithFavorite = paginated.results.map((p: ProductWithRelations) =>
+      mapProductList(p, userId ? favoriteIds.has(p.id) : undefined)
+    );
     
     return {
       ...paginated,
@@ -176,7 +178,7 @@ export class ProductsService {
       isFavorite = !!favorite;
     }
 
-    return mapProductDetails(product,isFavorite);
+    return mapProductDetails(product,userId ? isFavorite: undefined);
   }
 
   async remove(productId: string): Promise<ActionResponseDto> {

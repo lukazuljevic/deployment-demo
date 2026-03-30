@@ -54,7 +54,7 @@ export class CreateProductVariantDto {
 }
 
 export class CreateProductImageDto {
-  @ApiProperty({ description: 'Image URL' })
+  @ApiProperty({ description: 'Image URL', default: 'http://example.image.com' })
   @IsUrl()
   url: string;
 

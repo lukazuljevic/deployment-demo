@@ -35,6 +35,11 @@ enum OrderStatus{
   DELIVERED
 }
 
+enum AddressType{
+  BILLING
+  SHIPPING
+}
+
 model User{
   id String @id @default(uuid())
   email String @unique
@@ -42,7 +47,7 @@ model User{
   firstName String
   lastName String
   avatarUrl String?
-  address Address?
+  addresses Address[]
   card UserCard?
   role Role @default(USER)
   orders Order[]
@@ -55,7 +60,6 @@ model UserCard{
   id String @id @default(uuid())
   userId String @unique
   user User @relation(fields: [userId],references:[id])
-
   expiryMonth Int
   expiryYear Int
   iban String
@@ -64,9 +68,9 @@ model UserCard{
 
 model Address{
   id String @id @default(uuid())
-  userId String @unique
+  userId String
   user User @relation(fields: [userId],references:[id])
-
+  type AddressType
   street String
   city String
   country String
@@ -91,7 +95,6 @@ model Product{
   variants ProductVariant[]
   images ProductImage[]
   favorites Favorite[]
-  orderItems OrderItem[]
 }
 
 model ProductVariant{
@@ -103,6 +106,7 @@ model ProductVariant{
   stock Int @default(1)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt  
+  orderItems OrderItem[]
 }
 
 model ProductImage{
@@ -159,8 +163,8 @@ model OrderItem{
   orderId String
   order Order @relation(fields: [orderId],references: [id])
 
-  productId String
-  product Product @relation(fields: [productId],references:[id])
+  variantId String
+  productVariant ProductVariant @relation(fields: [variantId],references:[id])
 
   status OrderStatus
   quantity Int

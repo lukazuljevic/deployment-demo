@@ -1,7 +1,10 @@
+import { AddressType } from "../enums/enum";
+
 export interface UserAddressResponseDto {
   street: string;
   city: string;
   zipcode: string;
+  type: AddressType;
   country: string;
 }
 
@@ -18,6 +21,6 @@ export interface ProfileResponseDto {
   firstName: string;
   lastName: string;
   avatarUrl?: string;
-  address: UserAddressResponseDto;
+  addresses: UserAddressResponseDto[];
   card: UserCardResponseDto;
 }

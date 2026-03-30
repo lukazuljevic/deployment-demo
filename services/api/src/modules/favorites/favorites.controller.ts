@@ -22,10 +22,12 @@ export class FavoritesController {
     return this.favoritesService.create(userId,productId);
   }
 
+  @RolesAuth(Role.USER,Role.ADMIN)
   @Get()
   @ApiOkResponse({
     description: 'Returns all favorite products of the authenticated user',
-    type: () => [ProductListDto],
+    type: () => ProductListDto,
+    isArray: true
   })    
   findUserFavorites(@Req() req: RequestWithJwtUser) {
     const userId=req.user.sub;

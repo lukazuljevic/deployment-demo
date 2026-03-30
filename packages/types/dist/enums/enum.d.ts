@@ -15,3 +15,7 @@ export declare enum SortOrder {
     ASC = "ASC",
     DESC = "DESC"
 }
+export declare enum AddressType {
+    SHIPPING = "SHIPPING",
+    BILLING = "BILLING"
+}

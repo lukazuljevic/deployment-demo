@@ -17,3 +17,9 @@ export enum SortOrder{
   ASC="ASC",
   DESC="DESC",
 }
+
+
+export enum AddressType {
+  SHIPPING = 'SHIPPING',
+  BILLING = 'BILLING'
+}

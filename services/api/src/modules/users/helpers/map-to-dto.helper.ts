@@ -9,7 +9,7 @@ const mapToDto = (user: UserWithRelations): ProfileResponseDto => {
     firstName: user.firstName,
     lastName: user.lastName,
     avatarUrl: user.avatarUrl ?? undefined,
-    address: omit(user.address, ['userId']),
+    addresses: user.addresses?.map(addr=>omit(addr, ['userId'])),
     card: omit(user.card, ['userId']),
   };
 };

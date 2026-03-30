@@ -1,3 +1,4 @@
+import { AddressType } from '@cart-app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UserAddressResponseDto {
@@ -9,6 +10,9 @@ export class UserAddressResponseDto {
 
   @ApiProperty({ description: 'ZIP / Postal code' })
   zipcode: string;
+
+  @ApiProperty({ description: '(Billing/Shipping) Adress type' })
+  type: AddressType;
 
   @ApiProperty({ description: 'Country' })
   country: string;
@@ -44,8 +48,8 @@ export class ProfileResponseDto {
   @ApiPropertyOptional({ description: 'Avatar URL' })
   avatarUrl?: string;
 
-  @ApiProperty({ description: 'User address', type: () => UserAddressResponseDto })
-  address: UserAddressResponseDto;
+  @ApiProperty({ description: 'User address', type: () => [UserAddressResponseDto] })
+  addresses: UserAddressResponseDto[];
 
   @ApiProperty({ description: 'User card info', type: () => UserCardResponseDto })
   card: UserCardResponseDto;

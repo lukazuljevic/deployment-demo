@@ -21,11 +21,11 @@ export class UpdateProfileDto {
   @IsUrl()
   avatarUrl?: string;
 
-  @ApiPropertyOptional({ type: () => UpdateUserAddressDto })
+  @ApiPropertyOptional({ type: () => [UpdateUserAddressDto] })
   @IsOptional()
-  @ValidateNested()
+  @ValidateNested({ each: true })
   @Type(() => UpdateUserAddressDto)
-  address?: UpdateUserAddressDto;
+  addresses?: UpdateUserAddressDto[];
 
   @ApiPropertyOptional({ type: () => UpdateUserCardDto })
   @IsOptional()

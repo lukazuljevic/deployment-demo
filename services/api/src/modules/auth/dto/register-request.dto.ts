@@ -1,11 +1,11 @@
-import { MIN_PASSWORD_LENGTH } from '@cart-app/types';
+import { AddressType, MIN_PASSWORD_LENGTH } from '@cart-app/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserAddressDto } from '@users/dto/user-address.dto';
 import { UserCardDto } from '@users/dto/user-card.dto';
 import { IsValidName } from '@validators/name.validator';
 import { IsStrongPassword } from '@validators/password.validator';
 import { Type } from 'class-transformer';
-import { IsDefined, IsEmail, MinLength, ValidateNested } from 'class-validator';
+import { ArrayMinSize, IsDefined, IsEmail, MinLength, ValidateNested } from 'class-validator';
 
 export class RegisterRequestDto {
   @ApiProperty({ description: 'User email, must be unique' })
@@ -28,11 +28,30 @@ export class RegisterRequestDto {
   @IsStrongPassword()
   password: string;
 
-  @ApiProperty({ type: () => UserAddressDto })
+  @ApiProperty({
+    type: () => [UserAddressDto],
+    default: [
+      {
+        type: AddressType.BILLING,
+        street: '',
+        city: 'Virovitica',
+        zipcode: '33000',
+        country: 'Croatia',
+      },
+      {
+        type: AddressType.SHIPPING,
+        street: '',
+        city: 'Virovitica',
+        zipcode: '33000',
+        country: 'Croatia',
+      },
+    ],
+  })
   @IsDefined({ message: 'Address is required' })
-  @ValidateNested()
+  @ValidateNested({ each: true })
   @Type(() => UserAddressDto)
-  address: UserAddressDto;
+  @ArrayMinSize(2)
+  addresses: UserAddressDto[];
 
   @ApiProperty({ type: () => UserCardDto })
   @IsDefined({ message: 'Card is required' })
