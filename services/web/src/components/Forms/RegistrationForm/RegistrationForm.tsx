@@ -2,9 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { AddressType } from "@cart-app/types";
+import mapToRegisterDto from "@helpers/map-to-register-dto";
+import { useRegisterMutation } from "@hooks/useRegisterMutation";
 import {
   RegistrationFormTypeEnum,
   registrationFormSchema,
+  type RegistrationFormSchemaProps,
 } from "@validation/registrationForm";
 import AddressInformation from "../AddressInformation";
 import PaymentInformation from "../PaymentInformation";
@@ -18,12 +21,9 @@ const RegistrationForm = () => {
     },
   });
 
-  const {
-    watch,
-    getValues,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = formMethods;
+  const { watch, getValues, handleSubmit } = formMethods;
+
+  const registerMutation = useRegisterMutation();
 
   const formType = watch("formType");
   const formTypeIsPersonalInformation =
@@ -45,7 +45,7 @@ const RegistrationForm = () => {
           street: "",
           city: "",
           country: "",
-          zipCode: "",
+          zipcode: "",
           type: AddressType.SHIPPING,
         });
 
@@ -53,16 +53,18 @@ const RegistrationForm = () => {
           street: "",
           city: "",
           country: "",
-          zipCode: "",
+          zipcode: "",
           type: AddressType.BILLING,
         });
         break;
       case RegistrationFormTypeEnum.Address:
         setFormType(RegistrationFormTypeEnum.PaymentInformation);
         break;
-      case RegistrationFormTypeEnum.PaymentInformation:
-        console.log("submit", getValues());
+      case RegistrationFormTypeEnum.PaymentInformation: {
+        const values = getValues() as RegistrationFormSchemaProps;
+        registerMutation.mutate(mapToRegisterDto(values));
         break;
+      }
     }
   }
 

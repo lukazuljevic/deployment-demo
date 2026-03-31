@@ -8,6 +8,7 @@ import {
   MIN_COUNTRY_LENGTH,
   MIN_STREET_LENGTH,
   MIN_ZIP_LENGTH,
+  zipcodeRegex,
 } from "@cart-app/types";
 import { z } from "zod";
 
@@ -42,7 +43,7 @@ export const addressSchema = z.object({
       MAX_COUNTRY_LENGTH,
       `Country can't be longer than ${MAX_COUNTRY_LENGTH} characters`,
     ),
-  zipCode: z
+  zipcode: z
     .string()
     .min(
       MIN_ZIP_LENGTH,
@@ -52,7 +53,7 @@ export const addressSchema = z.object({
       MAX_ZIP_LENGTH,
       `Zipcode can't be longer than ${MAX_ZIP_LENGTH} characters`,
     )
-    .regex(/^\d+$/, "Zipcode must contain only numbers"),
+    .regex(zipcodeRegex, "Zipcode must contain only numbers"),
 
   type: z.enum(AddressType),
 });

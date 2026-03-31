@@ -17,7 +17,7 @@ export const personalInformationSchema = z
         NAME_MAX_LENGTH,
         `Name can't be longer than ${NAME_MIN_LENGTH} characters`,
       )
-      .regex(nameRegex),
+      .regex(nameRegex, "Name can only have letters and apostrophes"),
     lastName: z
       .string()
       .min(NAME_MIN_LENGTH, "Last name is required")
@@ -25,14 +25,17 @@ export const personalInformationSchema = z
         NAME_MAX_LENGTH,
         `Last name can't be longer than ${NAME_MIN_LENGTH} characters`,
       )
-      .regex(nameRegex),
+      .regex(nameRegex, "Last Name can only have letters and apostrophes"),
     password: z
       .string()
       .min(
         MIN_PASSWORD_LENGTH,
         `Password must be at least ${MIN_PASSWORD_LENGTH} characters`,
       )
-      .regex(passwordRegex),
+      .regex(
+        passwordRegex,
+        "Password must have at least one letter, one number and one special character",
+      ),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

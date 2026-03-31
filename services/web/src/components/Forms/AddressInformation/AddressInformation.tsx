@@ -44,9 +44,9 @@ const AddressInformation = () => {
           label="Zip Code"
           fullWidth
           margin="normal"
-          {...register("shippingAddress.zipCode")}
-          error={!!errors.shippingAddress?.zipCode}
-          helperText={errors.shippingAddress?.zipCode?.message}
+          {...register("shippingAddress.zipcode")}
+          error={!!errors.shippingAddress?.zipcode}
+          helperText={errors.shippingAddress?.zipcode?.message}
         />
 
         <FormInput
@@ -56,6 +56,7 @@ const AddressInformation = () => {
           {...register("shippingAddress.type")}
           error={!!errors.shippingAddress?.type}
           helperText={errors.shippingAddress?.type?.message}
+          disabled
         />
       </fieldset>
 
@@ -93,9 +94,9 @@ const AddressInformation = () => {
           label="Zip Code"
           fullWidth
           margin="normal"
-          {...register("billingAddress.zipCode")}
-          error={!!errors.billingAddress?.zipCode}
-          helperText={errors.billingAddress?.zipCode?.message}
+          {...register("billingAddress.zipcode")}
+          error={!!errors.billingAddress?.zipcode}
+          helperText={errors.billingAddress?.zipcode?.message}
         />
 
         <FormInput
@@ -105,6 +106,7 @@ const AddressInformation = () => {
           {...register("billingAddress.type")}
           error={!!errors.billingAddress?.type}
           helperText={errors.billingAddress?.type?.message}
+          disabled
         />
       </fieldset>
     </>

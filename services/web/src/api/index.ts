@@ -1,0 +1,26 @@
+import axios, { AxiosError, type AxiosResponse } from "axios";
+import camelcaseKeys from "camelcase-keys";
+
+const BASE_URL = "http://localhost:3000/api";
+
+export const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+type ErrorResponse = AxiosError & {
+  response: AxiosResponse<{
+    statusCode: number;
+    path: string;
+    message: string;
+  }>;
+};
+
+api.interceptors.response.use(
+  (response) => camelcaseKeys(response.data, { deep: true }),
+  (error: ErrorResponse) => {
+    return Promise.reject(error.response.data.message || error.message);
+  },
+);

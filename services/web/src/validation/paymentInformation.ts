@@ -21,8 +21,8 @@ export const paymentInformationSchema = z
     cvc: z
       .string()
       .length(CVC_LENGTH, `CVV must have length of ${CVC_LENGTH} `)
-      .regex(cvcRegex),
-    iban: z.string().regex(ibanRegex),
+      .regex(cvcRegex, "CVC can only container numbers"),
+    iban: z.string().regex(ibanRegex, "Example of valid iban HR12345678910"),
   })
   .refine(
     (data) => {

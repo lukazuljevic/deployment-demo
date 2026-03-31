@@ -14,13 +14,13 @@ import { join } from 'node:path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { FavoritesModule } from './modules/favorites/favorites.module';
+import { MailsModule } from './modules/mails/mails.module';
 import { MailsService } from './modules/mails/mails.service';
 import { OrdersModule } from './modules/orders/orders.module';
 import { ProductsModule } from './modules/products/products.module';
 import { UsersController } from './modules/users/users.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
-import { MailsModule } from './modules/mails/mails.module';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { MailsModule } from './modules/mails/mails.module';
     }),
     ProductsModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'web', 'dist'),
+      rootPath: join(__dirname, '..', '..', '..', 'web', 'dist'),
     }),
     FavoritesModule,
     OrdersModule,
