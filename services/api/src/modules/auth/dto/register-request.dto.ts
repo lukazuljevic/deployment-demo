@@ -1,11 +1,23 @@
-import { AddressType, MIN_PASSWORD_LENGTH } from '@cart-app/types';
+import {
+  AddressType,
+  MIN_PASSWORD_LENGTH,
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+} from '@cart-app/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserAddressDto } from '@users/dto/user-address.dto';
 import { UserCardDto } from '@users/dto/user-card.dto';
 import { IsValidName } from '@validators/name.validator';
 import { IsStrongPassword } from '@validators/password.validator';
 import { Type } from 'class-transformer';
-import { ArrayMinSize, IsDefined, IsEmail, MinLength, ValidateNested } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsDefined,
+  IsEmail,
+  Length,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
 
 export class RegisterRequestDto {
   @ApiProperty({ description: 'User email, must be unique' })
@@ -13,10 +25,12 @@ export class RegisterRequestDto {
   email: string;
 
   @ApiProperty({ description: 'First name of the user' })
+  @Length(NAME_MIN_LENGTH, NAME_MAX_LENGTH)
   @IsValidName()
   firstName: string;
 
   @ApiProperty({ description: 'Last name of the user' })
+  @Length(NAME_MIN_LENGTH, NAME_MAX_LENGTH)
   @IsValidName()
   lastName: string;
 

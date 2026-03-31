@@ -1,26 +1,36 @@
+import {
+  MAX_CITY_LENGTH,
+  MAX_COUNTRY_LENGTH,
+  MAX_STREET_LENGTH,
+  MAX_ZIP_LENGTH,
+  MIN_CITY_LENGTH,
+  MIN_COUNTRY_LENGTH,
+  MIN_STREET_LENGTH,
+  MIN_ZIP_LENGTH,
+} from '@cart-app/types';
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { AddressType } from '@prisma/client';
-import { IsEnum, IsNotEmpty, IsNumberString, IsString, IsUUID } from 'class-validator';
+import { IsEnum, IsNumberString, IsString, IsUUID, Length } from 'class-validator';
 
 export class UserAddressDto {
   @ApiProperty({ description: 'Street address' })
   @IsString()
-  @IsNotEmpty({ message: 'Street cannot be empty' })
+  @Length(MIN_STREET_LENGTH, MAX_STREET_LENGTH)
   street: string;
 
   @ApiProperty({ description: 'City' })
   @IsString()
-  @IsNotEmpty({ message: 'City cannot be empty' })
+  @Length(MIN_CITY_LENGTH, MAX_CITY_LENGTH)
   city: string;
 
   @ApiProperty({ description: 'ZIP / Postal code' })
   @IsNumberString()
-  @IsNotEmpty({ message: 'ZIP code cannot be empty' })
+  @Length(MIN_ZIP_LENGTH, MAX_ZIP_LENGTH)
   zipcode: string;
 
   @ApiProperty({ description: 'Country' })
   @IsString()
-  @IsNotEmpty({ message: 'Country cannot be empty' })
+  @Length(MIN_COUNTRY_LENGTH, MAX_COUNTRY_LENGTH)
   country: string;
 
   @ApiProperty({ enum: AddressType })

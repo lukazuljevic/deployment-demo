@@ -1,18 +1,21 @@
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from '@cart-app/types';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsValidName } from '@validators/name.validator';
 import { Type } from 'class-transformer';
-import { IsOptional, IsUrl, ValidateNested } from 'class-validator';
+import { IsOptional, IsUrl, Length, ValidateNested } from 'class-validator';
 import { UpdateUserAddressDto } from './user-address.dto';
 import { UpdateUserCardDto } from './user-card.dto';
 
 export class UpdateProfileDto {
   @ApiPropertyOptional()
   @IsOptional()
+  @Length(NAME_MIN_LENGTH, NAME_MAX_LENGTH)
   @IsValidName()
   firstName?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
+  @Length(NAME_MIN_LENGTH, NAME_MAX_LENGTH)
   @IsValidName()
   lastName?: string;
 

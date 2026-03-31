@@ -9,6 +9,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { FindOrdersDto } from './dto/find-orders.dto';
 import { OrderListDto, OrderUpdateResponseDto } from './dto/response.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
+import { allowedTransitions } from './validation/update.validation';
 
 @Injectable()
 export class OrdersService {
@@ -128,6 +129,15 @@ export class OrdersService {
   }
 
   async update(orderId: string, { status }: UpdateOrderStatusDto): Promise<OrderUpdateResponseDto> {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+    });
+
+    if (!order) throw new NotFoundException(`Order with id ${orderId} not found`);
+
+    if (!allowedTransitions[order.status].includes(status))
+      throw new BadRequestException(`Cannot change status from ${order.status} to ${status}`);
+
     const updated = await this.prisma.order.update({
       where: { id: orderId },
       data: { status },

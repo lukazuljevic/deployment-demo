@@ -7,6 +7,7 @@
     "module": "ESNext",
     "types": ["vite/client"],
     "skipLibCheck": true,
+    "baseUrl": "src",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -20,9 +21,15 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "paths": {
+      "@validation/*": ["validation/*"],
+      "@pages/*": ["pages/*"],
+      "@components/*": ["components/*"],
+      "@routes/*": ["routes/*"]
+    }
   },
   "include": ["src"]
 }
