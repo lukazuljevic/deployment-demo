@@ -32,7 +32,8 @@
       "@forms/*": ["forms/*"],
       "@hooks/*": ["hooks/*"],
       "@api/*": ["api/*"],
-      "@helpers/*": ["helpers/*"]
+      "@helpers/*": ["helpers/*"],
+      "@context/*": ["context/*"]
     }
   },
   "include": ["src"]

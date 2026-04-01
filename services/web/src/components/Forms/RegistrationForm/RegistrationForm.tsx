@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { AddressType } from "@cart-app/types";
 import mapToRegisterDto from "@helpers/map-to-register-dto";
-import { useRegisterMutation } from "@hooks/useRegisterMutation";
+import useAuth from "@hooks/useAuth";
 import {
   RegistrationFormTypeEnum,
   registrationFormSchema,
@@ -23,7 +23,7 @@ const RegistrationForm = () => {
 
   const { watch, getValues, handleSubmit } = formMethods;
 
-  const registerMutation = useRegisterMutation();
+  const { register: registerMutation } = useAuth();
 
   const formType = watch("formType");
   const formTypeIsPersonalInformation =

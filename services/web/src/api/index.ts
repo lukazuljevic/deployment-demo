@@ -1,3 +1,4 @@
+import LocalStorage from "@helpers/LocalStorage";
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import camelcaseKeys from "camelcase-keys";
 
@@ -19,8 +20,17 @@ type ErrorResponse = AxiosError & {
 };
 
 api.interceptors.response.use(
-  (response) => camelcaseKeys(response.data, { deep: true }),
+  (response) => {
+    const unwrapped = response.data.data;
+    return camelcaseKeys(unwrapped, { deep: true });
+  },
   (error: ErrorResponse) => {
     return Promise.reject(error.response.data.message || error.message);
   },
 );
+
+api.interceptors.request.use((config) => {
+  const token = LocalStorage.getAccessToken();
+  if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});

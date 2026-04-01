@@ -1,14 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { AuthProvider } from "@context/AuthContext";
+import useAuth from "@hooks/useAuth";
+import { RouterProvider } from "@tanstack/react-router";
+import { Toaster } from "react-hot-toast";
+import { router } from "router";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-  )
+function InnerApp() {
+  const auth = useAuth();
+  return <RouterProvider router={router} context={{ auth }} />;
 }
 
-export default App
+function App() {
+  return (
+    <AuthProvider>
+      <InnerApp />
+      <Toaster position="top-right" toastOptions={{ duration: 2500 }}></Toaster>
+    </AuthProvider>
+  );
+}
+
+export default App;

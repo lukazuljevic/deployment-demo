@@ -11,37 +11,37 @@ import { FavoritesService } from './favorites.service';
 export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
 
-  @RolesAuth(Role.USER,Role.ADMIN)
-  @Post(":productId")
+  @RolesAuth(Role.USER, Role.ADMIN)
+  @Post(':productId')
   @ApiCreatedResponse({
     description: 'Returns id if product is successfuly added to favorites',
     type: () => ActionResponseDto,
-  })  
-  create(@Param('productId', ParseUUIDPipe) productId: string,@Req() req: RequestWithJwtUser) {
-    const userId=req.user.sub;
-    return this.favoritesService.create(userId,productId);
+  })
+  create(@Param('productId', ParseUUIDPipe) productId: string, @Req() req: RequestWithJwtUser) {
+    const userId = req.user.sub;
+    return this.favoritesService.create(userId, productId);
   }
 
-  @RolesAuth(Role.USER,Role.ADMIN)
+  @RolesAuth(Role.USER, Role.ADMIN)
   @Get()
   @ApiOkResponse({
     description: 'Returns all favorite products of the authenticated user',
     type: () => ProductListDto,
-    isArray: true
-  })    
+    isArray: true,
+  })
   findUserFavorites(@Req() req: RequestWithJwtUser) {
-    const userId=req.user.sub;
+    const userId = req.user.sub;
     return this.favoritesService.findUserFavorites(userId);
   }
 
-  @RolesAuth(Role.USER,Role.ADMIN)
+  @RolesAuth(Role.USER, Role.ADMIN)
   @Delete(':productId')
   @ApiOkResponse({
     description: 'Returns id if product is successfuly removed from favorites',
     type: () => ActionResponseDto,
-  })  
-  remove(@Param('productId', ParseUUIDPipe) productId: string,@Req() req: RequestWithJwtUser) {
-    const userId=req.user.sub;
-    return this.favoritesService.remove(userId,productId);
+  })
+  remove(@Param('productId', ParseUUIDPipe) productId: string, @Req() req: RequestWithJwtUser) {
+    const userId = req.user.sub;
+    return this.favoritesService.remove(userId, productId);
   }
 }

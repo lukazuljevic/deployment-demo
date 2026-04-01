@@ -4,5 +4,7 @@ export enum AppPaths {
   REGISTER_ADDRESSS = "address",
   LOGIN = "/login",
   HOME = "/",
+  ADMIN = "/admin",
+  FORBIDDEN = "/forbidden",
   NON_EXSTING = "*",
 }

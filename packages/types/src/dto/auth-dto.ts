@@ -6,6 +6,7 @@ export type AccessToken = {
 
 export interface MeResponseDto {
   isLoggedIn: boolean;
+  isAdmin: boolean;
 }
 
 export class RegisterRequestDto {
