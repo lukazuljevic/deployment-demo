@@ -1,0 +1,29 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 800px;
+  height: clamp(600px, 50vw, 815px);
+  padding: 40px 20px;
+  border: var(--card-border);
+  border-radius: var(--main-border-radius);
+  box-shadow: var(--card-box-shadow);
+  background: var(--container-bg);
+  cursor: pointer;
+  will-change: transform;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--launch-card-box-shadow-hover);
+  }
+
+  &::after {
+    content: none;
+  }
+}

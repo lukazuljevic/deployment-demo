@@ -4,6 +4,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AddressType } from "@cart-app/types";
 import mapToRegisterDto from "@helpers/map-to-register-dto";
 import useAuth from "@hooks/useAuth";
+import { registerRoute } from "@routes/auth";
+import { AppPaths } from "@routes/paths";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import {
   RegistrationFormTypeEnum,
   registrationFormSchema,
@@ -24,6 +27,10 @@ const RegistrationForm = () => {
   const { watch, getValues, handleSubmit } = formMethods;
 
   const { register: registerMutation } = useAuth();
+
+  const navigate = useNavigate();
+  const routeApi = getRouteApi(registerRoute.fullPath);
+  const search = routeApi.useSearch();
 
   const formType = watch("formType");
   const formTypeIsPersonalInformation =
@@ -62,7 +69,11 @@ const RegistrationForm = () => {
         break;
       case RegistrationFormTypeEnum.PaymentInformation: {
         const values = getValues() as RegistrationFormSchemaProps;
-        registerMutation.mutate(mapToRegisterDto(values));
+        registerMutation.mutate(mapToRegisterDto(values), {
+          onSuccess: () => {
+            navigate({ to: search.redirect || AppPaths.HOME });
+          },
+        });
         break;
       }
     }
