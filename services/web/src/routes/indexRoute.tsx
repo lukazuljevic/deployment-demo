@@ -1,15 +1,15 @@
 import { prefetchProducts } from "@api/products";
 import HomePage from "@pages/Home";
+import type { RootContext } from "@routes/router";
 import { createRoute } from "@tanstack/react-router";
 import {
   searchParamsSchema,
   type SearchParamsType,
 } from "@validation/searchParams";
-import type { RootContext } from "router";
-import rootRoute from "./root";
+import { appLayoutRoute } from "./appLayout";
 
 const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => appLayoutRoute,
   path: "/",
   validateSearch: searchParamsSchema,
   component: () => <HomePage />,

@@ -34,7 +34,9 @@
       "@api/*": ["api/*"],
       "@helpers/*": ["helpers/*"],
       "@context/*": ["context/*"],
-      "@types/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"]
     }
   },
   "include": ["src"]

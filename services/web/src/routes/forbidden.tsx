@@ -1,9 +1,9 @@
 import { createRoute } from "@tanstack/react-router";
+import { appLayoutRoute } from "./appLayout";
 import { AppPaths } from "./paths";
-import rootRoute from "./root";
 
 export const forbiddenRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => appLayoutRoute,
   path: AppPaths.FORBIDDEN,
   component: () => <div>403 Forbidden</div>,
 });

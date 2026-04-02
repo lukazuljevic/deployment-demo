@@ -1,10 +1,10 @@
 import PrivateRoute from "@components/PrivateRoute";
 import { createRoute } from "@tanstack/react-router";
+import { appLayoutRoute } from "./appLayout";
 import { AppPaths } from "./paths";
-import rootRoute from "./root";
 
 export const adminRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => appLayoutRoute,
   path: AppPaths.ADMIN,
   component: () => (
     <PrivateRoute adminOnly>

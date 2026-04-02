@@ -1,7 +1,7 @@
 import useAuth from "@hooks/useAuth";
 import { loginRoute } from "@routes/auth";
 import { forbiddenRoute } from "@routes/forbidden";
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 interface PrivateRouteProps {
@@ -12,20 +12,18 @@ interface PrivateRouteProps {
 const PrivateRoute = ({ children, adminOnly }: PrivateRouteProps) => {
   const { isLoading, isLoggedIn, isAdmin } = useAuth();
   const navigate = useNavigate();
-  const loginApi = getRouteApi(loginRoute.id);
-  const forbiddenApi = getRouteApi(forbiddenRoute.id);
 
   useEffect(() => {
     if (isLoading) return;
     if (!isLoggedIn)
       navigate({
-        to: loginApi.id,
+        to: loginRoute.id,
         search: { redirect: location.pathname },
       });
 
     if (adminOnly && isAdmin === false)
       navigate({
-        to: forbiddenApi.id,
+        to: forbiddenRoute.id,
       });
   }, [isLoggedIn, isAdmin]);
 
