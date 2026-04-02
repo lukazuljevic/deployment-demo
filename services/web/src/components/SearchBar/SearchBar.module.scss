@@ -1,0 +1,29 @@
+.searchBar {
+  position: relative;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-color-gray);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 48px;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 18px;
+
+  &:hover {
+    border: 2px solid var(--color-orange);
+    border-radius: var(--border-radius);
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  aspect-ratio: 1/1;
+  pointer-events: none;
+}

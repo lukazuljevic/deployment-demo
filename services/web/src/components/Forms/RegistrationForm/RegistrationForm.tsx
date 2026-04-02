@@ -71,7 +71,7 @@ const RegistrationForm = () => {
         const values = getValues() as RegistrationFormSchemaProps;
         registerMutation.mutate(mapToRegisterDto(values), {
           onSuccess: () => {
-            navigate({ to: search.redirect || welcomeRoute.id });
+            navigate({ to: search.redirect || welcomeRoute.id, replace: true });
           },
         });
         break;

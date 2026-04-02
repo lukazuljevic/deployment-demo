@@ -19,20 +19,19 @@ export const registerRoute = createRoute({
   path: AppPaths.REGISTER,
   component: () => <RegisterPage />,
   beforeLoad: ({ context, search }) => {
+    const fallback = indexRoute.id;
     if (context.auth.isLoggedIn) {
       throw redirect({ to: search.redirect || fallback });
     }
   },
 });
 
-const fallback = indexRoute.id;
-
 export const loginRoute = createRoute({
   getParentRoute: () => authLayoutRoute,
   validateSearch: z.object({ redirect: z.string().optional().catch("") }),
   path: AppPaths.LOGIN,
   beforeLoad: ({ context, search }) => {
-    console.log(context.auth);
+    const fallback = indexRoute.id;
     if (context.auth.isLoggedIn) {
       throw redirect({ to: search.redirect || fallback });
     }

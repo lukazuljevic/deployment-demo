@@ -13,7 +13,7 @@ const indexRoute = createRoute({
   path: "/",
   validateSearch: searchParamsSchema,
   component: () => <HomePage />,
-  loader: async ({ context }) => {
+  loader: async ({ context, location }) => {
     const { queryClient } = context as RootContext;
 
     const urlSearchParams = new URLSearchParams(location.search);

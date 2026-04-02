@@ -22,7 +22,7 @@ const AppLayout = () => {
       <footer className={styles.footer}>
         <nav className={styles.navbar}>
           <Link to=".">
-            <img src={home} alt="home" />
+            <img src={home} alt="home" className={styles.navImage} />
           </Link>
           <Link to={adminApi.id} search={{}}>
             Admin

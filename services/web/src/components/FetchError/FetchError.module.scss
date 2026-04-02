@@ -1,0 +1,28 @@
+.container {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  color: white;
+  background-color: var(--bg-color-brown);
+}
+
+.innerContainer {
+  padding: 120px 0px;
+  width: 100%;
+  border-top: 1px solid var(--color-white-dimmed);
+  border-bottom: 1px solid var(--color-white-dimmed);
+}
+
+.message {
+  font-size: 24px;
+  color: var(--color-white-dimmed);
+}
+
+.errorIcon {
+  width: 24px;
+}

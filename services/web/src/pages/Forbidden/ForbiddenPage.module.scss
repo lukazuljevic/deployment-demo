@@ -1,0 +1,38 @@
+.container {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0px 20px;
+  color: white;
+  background-color: var(--bg-color-brown);
+}
+
+.errorCode {
+  font-size: 48px;
+  color: var(--color-orange);
+}
+
+.message {
+  font-size: 20px;
+  color: var(--color-white-dimmed);
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  transition: transform 0.2s ease;
+
+  svg {
+    color: var(--color-white-dimmed);
+  }
+  &:hover {
+    transform: scale(1.05);
+  }
+}

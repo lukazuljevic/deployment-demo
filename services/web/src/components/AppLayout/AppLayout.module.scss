@@ -8,11 +8,13 @@
 .header {
   position: fixed;
   top: 0;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   padding: 24px 20px;
   width: 100%;
   border-bottom: 1px solid rgb(188, 187, 187);
+  background-color: white;
 }
 
 .logo {
@@ -38,4 +40,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
+  padding: 0px 16px;
+}
+
+.navImage {
+  width: 40px;
 }

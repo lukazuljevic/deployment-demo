@@ -30,7 +30,7 @@ const LoginForm = () => {
     const values = getValues();
     loginMutation.mutate(values, {
       onSuccess: () => {
-        navigate({ to: search.redirect || welcomeRoute.id });
+        navigate({ to: search.redirect || welcomeRoute.id, replace: true });
       },
     });
   };

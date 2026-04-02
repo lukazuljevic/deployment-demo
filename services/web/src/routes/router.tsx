@@ -1,4 +1,6 @@
 import type useAuth from "@hooks/useAuth";
+import ErrorPage from "@pages/Error/ErrorPage";
+import NotFoundPage from "@pages/NotFound/NotFoundPage";
 import rootRoute from "@routes/root";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
@@ -29,6 +31,8 @@ const context: RootContext = {
 export const router = createRouter({
   routeTree,
   context,
+  defaultNotFoundComponent: NotFoundPage,
+  defaultErrorComponent: ErrorPage,
 });
 
 declare module "@tanstack/react-router" {

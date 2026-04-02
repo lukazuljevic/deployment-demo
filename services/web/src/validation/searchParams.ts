@@ -6,8 +6,8 @@ export const searchParamsSchema = z.object({
   search: z.string().optional(),
   sortOrder: z.enum(SortOrder).optional(),
   inStock: z
-    .string()
-    .transform((val) => val === "true")
+    .union([z.string(), z.boolean()])
+    .transform((val) => val === true || val === "true")
     .optional(),
   limit: z
     .union([z.string(), z.number()])
