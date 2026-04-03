@@ -16,6 +16,7 @@ export interface ProductVariantResponseDto {
 export interface ProductListDto {
   id: string;
   name: string;
+  brand: string;
   description: string;
   price: number;
   isFavorite?: boolean;
@@ -23,7 +24,6 @@ export interface ProductListDto {
 }
 
 export interface ProductResponseDto extends ProductListDto {
-  brand: string;
   type: ProductType;
   variants: ProductVariantResponseDto[];
 }
