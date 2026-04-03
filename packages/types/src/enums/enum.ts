@@ -24,15 +24,11 @@ export enum AddressType {
 }
 
 export enum ProductColor {
-  RED = "RED",
-  BLUE = "BLUE",
-  GREEN = "GREEN",
   BLACK = "BLACK",
   WHITE = "WHITE",
-  YELLOW = "YELLOW",
   GRAY = "GRAY",
-  ORANGE = "ORANGE",
-  PURPLE = "PURPLE",
-  VIOLET = "VIOLET",
-  CYAN = "CYAN",
+  BLUE = "BLUE",
+  GREEN = "GREEN",
+  RED = "RED",
+  YELLOW = "YELLOW",
 }

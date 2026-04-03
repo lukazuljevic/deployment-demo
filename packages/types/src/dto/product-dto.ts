@@ -16,13 +16,13 @@ export interface ProductVariantResponseDto {
 export interface ProductListDto {
   id: string;
   name: string;
+  description: string;
   price: number;
   isFavorite?: boolean;
   images: ProductImageResponseDto[];
 }
 
 export interface ProductResponseDto extends ProductListDto {
-  description: string;
   brand: string;
   type: ProductType;
   variants: ProductVariantResponseDto[];

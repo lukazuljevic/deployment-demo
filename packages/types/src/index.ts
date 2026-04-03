@@ -1,4 +1,5 @@
 export * from "./dto/auth-dto";
+export * from "./dto/category-dto";
 export * from "./dto/common";
 export * from "./dto/order-dto";
 export * from "./dto/product-dto";
