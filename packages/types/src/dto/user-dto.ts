@@ -1,6 +1,7 @@
 import { AddressType } from "../enums/enum";
 
 export interface UserAddressResponseDto {
+  id: string;
   street: string;
   city: string;
   zipcode: string;
@@ -21,7 +22,6 @@ export interface ProfileResponseDto {
   email: string;
   firstName: string;
   lastName: string;
-  avatarUrl?: string;
   addresses: UserAddressResponseDto[];
   card: UserCardResponseDto;
 }
