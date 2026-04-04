@@ -6,6 +6,7 @@ export interface UserAddressResponseDto {
   zipcode: string;
   type: AddressType;
   country: string;
+  county: string;
 }
 
 export interface UserCardResponseDto {

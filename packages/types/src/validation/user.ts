@@ -13,6 +13,8 @@ export const MIN_ZIP_LENGTH = 4;
 export const MAX_ZIP_LENGTH = 10;
 export const MIN_COUNTRY_LENGTH = 2;
 export const MAX_COUNTRY_LENGTH = 100;
+export const MIN_COUNTY_LENGTH = 2;
+export const MAX_COUNTY_LENGTH = 100;
 export const zipcodeRegex = /^\d+$/;
 
 export const MIN_EXPIRY_MONTH = 1;
