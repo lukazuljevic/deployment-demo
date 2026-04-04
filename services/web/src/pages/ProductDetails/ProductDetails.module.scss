@@ -1,0 +1,83 @@
+.detailsContainer {
+  position: fixed;
+  top: 370px;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100vw;
+  border-radius: var(--border-radius);
+  height: calc(100vh - 500px);
+  padding: 0px 20px;
+  background-color: white;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  scrollbar-width: none;
+}
+
+.imageCarousel {
+  position: relative;
+  align-self: center;
+}
+.carouselImage {
+  width: clamp(350px, 50vw, 500px);
+}
+
+.prevButton,
+.nextButton {
+  position: absolute;
+  top: 50%;
+  border-radius: var(--border-radius);
+  transform: translateY(-50%);
+  transition:
+    background-color 0.2s ease-in-out,
+    padding 0.2s ease-in-out;
+
+  &:hover {
+    padding: 10px 5px;
+    background-color: var(--color-orange);
+  }
+}
+
+.nextButton {
+  right: 0;
+}
+
+.prevButton {
+  left: 0;
+}
+
+.exitButton {
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.name {
+  font-size: clamp(16px, 1.5vw, 24px);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.price {
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: bold;
+}
+
+@media (min-width: 500px) {
+  .detailsContainer {
+    padding: 0px 60px;
+  }
+}

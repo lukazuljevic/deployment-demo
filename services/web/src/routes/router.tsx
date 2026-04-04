@@ -10,7 +10,8 @@ import { authLayoutRoute, loginRoute, registerRoute } from "./auth";
 import favoritesRoute from "./favoritesRoute";
 import { forbiddenRoute } from "./forbidden";
 import indexRoute from "./indexRoute";
-import searchRoute from "./productRoute";
+import { productRoute, productsRoute } from "./productRoute";
+import profileRoute from "./profileRoute";
 import redirectToAuthRoute from "./redirect";
 import welcomeRoute from "./welcome";
 export interface RootContext {
@@ -25,8 +26,9 @@ const routeTree = rootRoute.addChildren([
   appLayoutRoute.addChildren([
     indexRoute,
     adminRoute,
-    searchRoute,
+    productsRoute.addChildren([productRoute]),
     favoritesRoute,
+    profileRoute,
     forbiddenRoute,
   ]),
 ]);

@@ -25,16 +25,16 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@validation/*": ["validation/*"],
+      "@validation/*": ["common/validation/*"],
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
       "@routes/*": ["routes/*"],
       "@forms/*": ["forms/*"],
       "@hooks/*": ["hooks/*"],
       "@api/*": ["api/*"],
-      "@helpers/*": ["helpers/*"],
+      "@helpers/*": ["common/helpers/*"],
       "@context/*": ["context/*"],
-      "@types/*": ["types/*"],
+      "@tstypes/*": ["common/types/*"],
       "@assets/*": ["assets/*"],
       "@styles/*": ["styles/*"]
     }

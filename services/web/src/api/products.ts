@@ -3,11 +3,13 @@ import {
   type FindProductsDto,
   type PaginatedResponse,
   type ProductListDto,
+  type ProductResponseDto,
 } from "@cart-app/types";
 import {
   keepPreviousData,
   QueryClient,
   useInfiniteQuery,
+  useQuery,
   type InfiniteData,
 } from "@tanstack/react-query";
 import { api } from ".";
@@ -81,5 +83,16 @@ export const prefetchProducts = async (
       lastPage.meta.next ?? undefined,
     staleTime: 5 * 60 * 1000,
     initialPageParam: 1,
+  });
+};
+
+export const getProduct = async (id: string): Promise<ProductResponseDto> => {
+  return api.get<ProductResponseDto>(`/products/${id}`);
+};
+
+export const useProduct = (productId: string) => {
+  return useQuery({
+    queryKey: [QueryKeys.PRODUCTS, productId],
+    queryFn: () => getProduct(productId),
   });
 };

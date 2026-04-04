@@ -1,0 +1,19 @@
+.quantitySelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 16px;
+  font-size: clamp(20px, 1.5vw, 24px);
+}
+
+.value {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.selectorButton {
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 50%;
+  background-color: var(--color-white-dimmed);
+}

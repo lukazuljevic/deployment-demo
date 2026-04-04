@@ -1,7 +1,7 @@
 import type { ProductColor } from "@cart-app/types";
 import Color from "@components/Color/Color";
-import { colorOptions } from "@helpers/colorMap";
 import useColorFilter from "@hooks/useColorFilter";
+import { colorOptions } from "common/helpers/colorMap";
 import Select, { components } from "react-select";
 import styles from "./ColorFilter.module.scss";
 

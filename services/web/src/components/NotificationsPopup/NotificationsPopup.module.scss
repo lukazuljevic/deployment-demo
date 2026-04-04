@@ -1,0 +1,85 @@
+.popup {
+  position: fixed;
+  top: 84px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.popupUpper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 70px;
+  border-bottom: 2px solid #5a3e36;
+
+  h1 {
+    font-size: 26px;
+    font-weight: 100;
+  }
+}
+
+.exitButton {
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100vw;
+  padding-right: 20px;
+}
+
+.openButton {
+  position: relative;
+  cursor: pointer;
+}
+
+.notificationsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notificationItem {
+  display: flex;
+  padding: 20px 0px;
+  border: 2px solid var(--color-orange);
+  border-radius: var(--border-radius);
+}
+
+.clearButton {
+  width: 50%;
+  padding: 8px clamp(8px, 1vw, 16px);
+  margin: 16px auto;
+  border: 1px solid black;
+  border-radius: 32px;
+  font-size: clamp(16px, 1vw, 20px);
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--box-shadow-hover);
+  }
+}
+
+@media (min-width: 500px) {
+  .notificationItem {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}

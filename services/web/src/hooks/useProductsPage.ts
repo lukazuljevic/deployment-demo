@@ -1,12 +1,12 @@
 import { useCategories } from "@api/category";
 import { useProducts } from "@api/products";
 import type { SortOrder } from "@cart-app/types";
-import productRoute from "@routes/productRoute";
+import { productsRoute } from "@routes/productRoute";
 import { useNavigate } from "@tanstack/react-router";
 import useInfiniteScroll from "./useInfiniteScroll";
 
 const useProductsPage = () => {
-  const search = productRoute.useSearch();
+  const search = productsRoute.useSearch();
   const navigate = useNavigate();
 
   const filters = {

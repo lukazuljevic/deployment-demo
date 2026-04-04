@@ -1,0 +1,81 @@
+.profileContainer {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 190px 20px 0px;
+}
+
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  background-color: #f2eeee;
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sectionImage {
+  transform: translateX(-10%);
+}
+
+.profileInfo {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.label {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.value {
+  display: block;
+  max-width: 140px;
+  font-size: 14px;
+  text-align: left;
+  word-wrap: break-word;
+  color: var(--color-value);
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-around;
+}
+
+.logoutButton,
+.editButton {
+  padding: 8px clamp(16px, 3vw, 32px);
+  margin-top: 16px;
+  border: 1px solid black;
+  border-radius: 32px;
+  font-size: 20px;
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+  }
+}

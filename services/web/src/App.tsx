@@ -18,8 +18,17 @@ function App() {
       <FavoritesProvider>
         <InnerApp />
         <Toaster
-          position="top-right"
-          toastOptions={{ duration: 2500 }}
+          containerStyle={{
+            top: 150,
+            right: 0,
+          }}
+          toastOptions={{
+            duration: 2500,
+            style: {
+              border: "2px solid orange",
+              borderRadius: "8px",
+            },
+          }}
         ></Toaster>
       </FavoritesProvider>
     </AuthProvider>

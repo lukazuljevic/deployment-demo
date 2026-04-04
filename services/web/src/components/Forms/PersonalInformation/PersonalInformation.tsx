@@ -1,6 +1,7 @@
 import FormInput from "@components/FormInput";
-import { type RegistrationFormSchemaProps } from "@validation/registrationForm";
+import { type RegistrationFormSchemaProps } from "common/validation/registrationForm";
 import { useFormContext } from "react-hook-form";
+import styles from "../RegistrationForm/RegistrationForm.module.scss";
 
 const PersonalInformation = () => {
   const {
@@ -9,7 +10,7 @@ const PersonalInformation = () => {
   } = useFormContext<RegistrationFormSchemaProps>();
 
   return (
-    <fieldset>
+    <fieldset className={styles.formInner}>
       <legend>Personal Information</legend>
 
       <FormInput

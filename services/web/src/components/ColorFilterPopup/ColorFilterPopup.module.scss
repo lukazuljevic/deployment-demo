@@ -35,10 +35,11 @@
 .buttonWrapper {
   display: flex;
   justify-content: flex-end;
-  width: 100vw;
+  width: 100%;
   padding-right: 20px;
 }
 
 .openButton {
+  position: relative;
   cursor: pointer;
 }

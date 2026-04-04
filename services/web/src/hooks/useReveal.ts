@@ -19,7 +19,6 @@ const useReveal = <T extends HTMLElement>({
   useEffect(() => {
     if (!ref.current) return;
 
-    console.log("animacija");
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ref.current,

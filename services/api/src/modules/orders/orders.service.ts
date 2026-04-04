@@ -123,6 +123,7 @@ export class OrdersService {
         city: o.shippingAddress.city,
         zipcode: o.shippingAddress.zipcode,
         country: o.shippingAddress.country,
+        county: o.shippingAddress.county,
         type: o.shippingAddress.type,
       },
     }));

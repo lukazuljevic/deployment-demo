@@ -1,5 +1,5 @@
 .card {
-  padding: 8px 32px;
+  padding: 8px clamp(16px, 3vw, 32px);
   border: 1px solid black;
   border-radius: 32px;
   will-change: transform;

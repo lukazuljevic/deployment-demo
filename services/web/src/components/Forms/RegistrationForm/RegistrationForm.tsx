@@ -15,6 +15,7 @@ import {
 import AddressInformation from "../AddressInformation";
 import PaymentInformation from "../PaymentInformation";
 import PersonalInformation from "../PersonalInformation";
+import styles from "./RegistrationForm.module.scss";
 
 const RegistrationForm = () => {
   const formMethods = useForm({
@@ -51,6 +52,7 @@ const RegistrationForm = () => {
         formMethods.setValue("shippingAddress", {
           street: "",
           city: "",
+          county: "",
           country: "",
           zipcode: "",
           type: AddressType.SHIPPING,
@@ -59,6 +61,7 @@ const RegistrationForm = () => {
         formMethods.setValue("billingAddress", {
           street: "",
           city: "",
+          county: "",
           country: "",
           zipcode: "",
           type: AddressType.BILLING,
@@ -80,17 +83,19 @@ const RegistrationForm = () => {
   }
 
   return (
-    <FormProvider {...formMethods}>
-      <form onSubmit={handleSubmit(handleNextFormType)}>
-        {formTypeIsPersonalInformation && <PersonalInformation />}
-        {formTypeIsShippingAddress && <AddressInformation />}
-        {formTypeIsPaymentInformation && <PaymentInformation />}
+    <div className={styles.registerContainer}>
+      <FormProvider {...formMethods}>
+        <form onSubmit={handleSubmit(handleNextFormType)}>
+          {formTypeIsPersonalInformation && <PersonalInformation />}
+          {formTypeIsShippingAddress && <AddressInformation />}
+          {formTypeIsPaymentInformation && <PaymentInformation />}
 
-        <button type="submit">
-          {formTypeIsPaymentInformation ? "Submit" : "Next"}
-        </button>
-      </form>
-    </FormProvider>
+          <button type="submit" className={styles.nextButton}>
+            {formTypeIsPaymentInformation ? "Submit" : "Next"}
+          </button>
+        </form>
+      </FormProvider>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import FormInput from "@components/FormInput";
-import { type RegistrationFormSchemaProps } from "@validation/registrationForm";
+import { type RegistrationFormSchemaProps } from "common/validation/registrationForm";
 import { useFormContext } from "react-hook-form";
+import styles from "../RegistrationForm/RegistrationForm.module.scss";
 
 const PaymentInformation = () => {
   const {
@@ -10,7 +11,7 @@ const PaymentInformation = () => {
 
   return (
     <fieldset>
-      <legend>Payment Information</legend>
+      <legend className={styles.formInnter}>Payment Information</legend>
 
       <FormInput
         label="Expiry Month"

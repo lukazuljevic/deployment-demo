@@ -1,0 +1,25 @@
+.header {
+  position: relative;
+  padding: 110px 30px 30px;
+  width: 100vw;
+  border-bottom: 3px solid var(--color-white-dimmed);
+}
+.categoriesContainer {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 100vw;
+  margin-top: 20px;
+}
+
+.sortWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
+.sortText {
+  font-size: 18px;
+}

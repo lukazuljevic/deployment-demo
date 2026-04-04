@@ -5,7 +5,7 @@ import { createRoute } from "@tanstack/react-router";
 import {
   searchParamsSchema,
   type SearchParamsType,
-} from "@validation/searchParams";
+} from "common/validation/searchParams";
 import { appLayoutRoute } from "./appLayout";
 
 const indexRoute = createRoute({

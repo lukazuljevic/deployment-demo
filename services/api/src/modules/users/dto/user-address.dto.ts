@@ -1,10 +1,12 @@
 import {
   MAX_CITY_LENGTH,
   MAX_COUNTRY_LENGTH,
+  MAX_COUNTY_LENGTH,
   MAX_STREET_LENGTH,
   MAX_ZIP_LENGTH,
   MIN_CITY_LENGTH,
   MIN_COUNTRY_LENGTH,
+  MIN_COUNTY_LENGTH,
   MIN_STREET_LENGTH,
   MIN_ZIP_LENGTH,
 } from '@cart-app/types';
@@ -32,6 +34,11 @@ export class UserAddressDto {
   @IsString()
   @Length(MIN_COUNTRY_LENGTH, MAX_COUNTRY_LENGTH)
   country: string;
+
+  @ApiProperty({ description: 'County' })
+  @IsString()
+  @Length(MIN_COUNTY_LENGTH, MAX_COUNTY_LENGTH)
+  county: string;
 
   @ApiProperty({ enum: AddressType })
   @IsEnum(AddressType)

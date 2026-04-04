@@ -56,7 +56,6 @@ model User{
   password String 
   firstName String
   lastName String
-  avatarUrl String?
   addresses Address[]
   card UserCard?
   role Role @default(USER)
@@ -84,6 +83,7 @@ model Address{
   street String
   city String
   country String
+  county String
   zipcode String
 
   billingOrders Order[] @relation("BillingOrder")

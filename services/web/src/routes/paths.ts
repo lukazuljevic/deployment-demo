@@ -4,6 +4,7 @@ export enum AppPaths {
   HOME = "/",
   PRODUCTS = "/products",
   FAVORITES = "/favorites",
+  PROFILE = "/profile",
   ADMIN = "/admin",
   FORBIDDEN = "/forbidden",
   NON_EXSTING = "*",

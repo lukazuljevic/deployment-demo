@@ -2,6 +2,7 @@ import { RegisterRequestDto } from '@auth/dto/register-request.dto';
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
+import { ActionResponseDto } from 'src/common/dto/common';
 import { ProfileResponseDto } from './dto/response.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AreAddressTypesUnique } from './helpers/address-type-validation.helper';
@@ -62,7 +63,7 @@ export class UsersService {
     return mapToDto(user);
   }
 
-  async updateProfile(userId: string, dto: UpdateProfileDto): Promise<ProfileResponseDto> {
+  async updateProfile(userId: string, dto: UpdateProfileDto): Promise<ActionResponseDto> {
     const user = await this.findOneByid(userId);
 
     if (!user) throw new NotFoundException('User not found');
@@ -94,6 +95,6 @@ export class UsersService {
       },
     });
 
-    return mapToDto(updatedUser);
+    return { message: 'Profile updated successfully', id: updatedUser.id };
   }
 }

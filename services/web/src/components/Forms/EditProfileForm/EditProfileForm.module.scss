@@ -1,0 +1,44 @@
+.editContainer {
+  position: fixed;
+  z-index: 9999;
+  padding: 20px 20px 40px;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.editContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.title {
+  margin-bottom: 32px;
+  font-size: 26px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-around;
+}
+.saveButton,
+.cancelButton {
+  padding: 8px clamp(16px, 3vw, 32px);
+  margin-top: 16px;
+  border: 1px solid black;
+  border-radius: 32px;
+  font-size: 24px;
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--box-shadow-hover);
+  }
+}

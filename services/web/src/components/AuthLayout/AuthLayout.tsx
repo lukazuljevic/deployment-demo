@@ -1,13 +1,11 @@
 import appLogo from "@assets/images/Logo.svg";
 import notification from "@assets/images/notification.svg";
 import { loginRoute, registerRoute } from "@routes/auth";
-import { getRouteApi, Link, Outlet } from "@tanstack/react-router";
+import { Link, Outlet } from "@tanstack/react-router";
+import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import styles from "./AuthLayout.module.scss";
 
 const AuthLayout = () => {
-  const loginApi = getRouteApi(loginRoute.id);
-  const registerApi = getRouteApi(registerRoute.id);
-
   return (
     <div className={styles.root}>
       <header className={styles.header}>
@@ -21,11 +19,13 @@ const AuthLayout = () => {
 
       <footer className={styles.footer}>
         <nav className={styles.navbar}>
-          <Link to={registerApi.id} search={{}}>
-            Register
-          </Link>
-          <Link to={loginApi.id} search={{}}>
+          <Link to={loginRoute.id}>
+            <FaSignInAlt color="black" />
             Login
+          </Link>
+          <Link to={registerRoute.id} search={{}}>
+            <FaUserPlus color="black" />
+            Register
           </Link>
         </nav>
       </footer>

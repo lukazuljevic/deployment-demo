@@ -1,4 +1,4 @@
-import { ProfileResponseDto } from '@cart-app/types';
+import { ProfileResponseDto } from '@users/dto/response.dto';
 import { UserWithRelations } from '@users/users.service';
 import { omit } from 'lodash';
 
@@ -8,7 +8,6 @@ const mapToDto = (user: UserWithRelations): ProfileResponseDto => {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
-    avatarUrl: user.avatarUrl ?? undefined,
     addresses: user.addresses?.map((addr) => omit(addr, ['userId'])),
     card: omit(user.card, ['userId']),
   };

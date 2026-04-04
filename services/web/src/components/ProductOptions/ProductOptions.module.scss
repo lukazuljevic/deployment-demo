@@ -1,0 +1,21 @@
+.colorContainer {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.variantsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-self: flex-start;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 16px;
+  padding: 8px 10px;
+  font-size: clamp(18px, 1.5vw, 24px);
+  color: white;
+  background-color: var(--bg-color-brown);
+  border-radius: 32px;
+}

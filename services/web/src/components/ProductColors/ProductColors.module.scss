@@ -1,0 +1,9 @@
+button {
+  border-radius: 50%;
+  will-change: transform;
+}
+
+button.hoverable:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}

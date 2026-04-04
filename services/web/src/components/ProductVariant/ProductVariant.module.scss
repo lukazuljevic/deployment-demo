@@ -1,0 +1,23 @@
+.variantButton {
+  padding: 4px clamp(56px, 10vw, 256px);
+  margin-top: 16px;
+  border: 1px solid black;
+  border-radius: 32px;
+  font-size: clamp(20px, 1.5vw, 24px);
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--box-shadow-hover);
+  }
+
+  &.selected {
+    color: white;
+    background-color: var(--bg-color-brown);
+  }
+}

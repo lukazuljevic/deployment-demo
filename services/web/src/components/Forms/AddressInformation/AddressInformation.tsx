@@ -1,6 +1,7 @@
 import FormInput from "@components/FormInput";
-import { type RegistrationFormSchemaProps } from "@validation/registrationForm";
+import { type RegistrationFormSchemaProps } from "common/validation/registrationForm";
 import { useFormContext } from "react-hook-form";
+import styles from "../RegistrationForm/RegistrationForm.module.scss";
 
 const AddressInformation = () => {
   const {
@@ -8,10 +9,11 @@ const AddressInformation = () => {
     formState: { errors },
   } = useFormContext<RegistrationFormSchemaProps>();
 
+  console.log(errors);
   return (
     <>
       <fieldset>
-        <legend>Shipping Address</legend>
+        <legend className={styles.formInner}>Shipping Address</legend>
 
         <FormInput
           label="Street"
@@ -32,15 +34,6 @@ const AddressInformation = () => {
         />
 
         <FormInput
-          label="Country"
-          fullWidth
-          margin="normal"
-          {...register("shippingAddress.country")}
-          error={!!errors.shippingAddress?.country}
-          helperText={errors.shippingAddress?.country?.message}
-        />
-
-        <FormInput
           label="Zip Code"
           fullWidth
           margin="normal"
@@ -50,12 +43,28 @@ const AddressInformation = () => {
         />
 
         <FormInput
+          label="County"
+          fullWidth
+          margin="normal"
+          {...register("shippingAddress.county")}
+          error={!!errors.shippingAddress?.county}
+          helperText={errors.shippingAddress?.county?.message}
+        />
+
+        <FormInput
+          label="Country"
+          fullWidth
+          margin="normal"
+          {...register("shippingAddress.country")}
+          error={!!errors.shippingAddress?.country}
+          helperText={errors.shippingAddress?.country?.message}
+        />
+
+        <FormInput
           label="Adress Type"
           fullWidth
           margin="normal"
           {...register("shippingAddress.type")}
-          error={!!errors.shippingAddress?.type}
-          helperText={errors.shippingAddress?.type?.message}
           disabled
         />
       </fieldset>
@@ -79,6 +88,15 @@ const AddressInformation = () => {
           {...register("billingAddress.city")}
           error={!!errors.billingAddress?.city}
           helperText={errors.billingAddress?.city?.message}
+        />
+
+        <FormInput
+          label="County"
+          fullWidth
+          margin="normal"
+          {...register("billingAddress.county")}
+          error={!!errors.billingAddress?.county}
+          helperText={errors.billingAddress?.county?.message}
         />
 
         <FormInput

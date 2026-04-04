@@ -1,6 +1,6 @@
-import LocalStorage from "@helpers/LocalStorage";
 import axios, { AxiosError, type AxiosResponse } from "axios";
 import camelcaseKeys from "camelcase-keys";
+import LocalStorage from "common/helpers/LocalStorage";
 
 const BASE_URL = "http://localhost:3000/api";
 

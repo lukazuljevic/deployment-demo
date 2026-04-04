@@ -9,22 +9,22 @@ async function main() {
 
   const user = await prisma.user.create({
     data: {
-      email: 'user@example.com',
+      email: 'mama@gmail.com',
       password: passwordHash,
-      firstName: 'John',
-      lastName: 'Doe',
+      firstName: 'Vesna',
+      lastName: 'Leci',
       role: Role.USER,
-      avatarUrl: null,
     },
   });
 
-  const address = await prisma.address.create({
+  await prisma.address.create({
     data: {
       userId: user.id,
       type: AddressType.SHIPPING,
       street: '123 Main St',
       city: 'Zagreb',
       country: 'Croatia',
+      county: 'Splitsko-Dalmatinska',
       zipcode: '10000',
     },
   });

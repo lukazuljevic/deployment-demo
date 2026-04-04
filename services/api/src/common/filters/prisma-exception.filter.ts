@@ -17,6 +17,8 @@ export class PrismaExceptionFilter implements ExceptionFilter {
 
     const { code } = exception;
 
+    console.log(exception);
+
     const { status, message } = errorMap[code] ?? {
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       message: 'Internal server error',

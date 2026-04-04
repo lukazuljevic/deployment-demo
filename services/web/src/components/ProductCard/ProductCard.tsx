@@ -3,6 +3,8 @@ import FavoriteButton from "@components/FavoriteButton";
 import ProductColors from "@components/ProductColors";
 import useDisableFavorite from "@hooks/disableFavorite";
 import { useToggleFavorite } from "@hooks/useToggleFavorite";
+import { productRoute } from "@routes/productRoute";
+import { Link, useLocation } from "@tanstack/react-router";
 import styles from "./ProductCard.module.scss";
 
 interface ProductCardProps {
@@ -17,6 +19,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
     productId: product.id,
     isFavorite,
   });
+
+  const location = useLocation();
 
   const { disabledFavorite, disable, enable } = useDisableFavorite();
 
@@ -35,7 +39,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <div className={styles.card}>
+    <Link
+      to={productRoute.id}
+      params={{ productId: product.id }}
+      search={location.search}
+      className={styles.card}
+    >
       <div className={styles.btnContainer}>
         <FavoriteButton
           onToggle={handleFavoriteClick}
@@ -56,7 +65,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <ProductColors images={images} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
