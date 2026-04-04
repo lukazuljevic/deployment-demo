@@ -14,3 +14,9 @@ export interface MailItem {
   price: number;
   imageUrl?: string;
 }
+
+export interface CartItemDto {
+  variantId: string;
+  quantity: number;
+  color: string;
+}
