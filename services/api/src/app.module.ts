@@ -23,6 +23,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { CartModule } from './modules/cart/cart.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { CartModule } from './modules/cart/cart.module';
     MailsModule,
     CategoriesModule,
     CartModule,
+    NotificationsModule,
   ],
   controllers: [AppController, UsersController],
   providers: [

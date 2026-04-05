@@ -62,8 +62,17 @@ model User{
   role Role @default(USER)
   orders Order[]
   favorites Favorite[]
+  notifications Notification[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt  
+}
+
+model Notification{
+  id String @id @default(uuid())
+  userId String
+  message String
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId],references: [id], onDelete: Cascade)
 }
 
 model UserCard{
@@ -205,3 +214,5 @@ model OrderItem{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt      
 }
+
+
