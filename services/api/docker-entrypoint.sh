@@ -2,6 +2,8 @@
 set -eu
 
 cd /app/services/api
+
+npx prisma generate --schema=./prisma/schema.prisma
 echo "=== Running database migrations ==="
 npx prisma migrate deploy
 
