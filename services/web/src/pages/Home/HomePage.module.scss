@@ -3,8 +3,11 @@
   z-index: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
-  padding: 110px 30px;
+  width: 100%;
+  padding: 110px 10px 0px;
 }
 
 .cardContainer {
@@ -13,4 +16,48 @@
   column-gap: 1.5rem;
   row-gap: 1.5rem;
   align-items: center;
+}
+
+.collection {
+  width: clamp(160px, 40vw, 250px);
+  border-radius: var(--border-radius);
+}
+
+.imageWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+
+  img {
+    height: 80%;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  max-height: 120px;
+
+  a {
+    align-self: flex-end;
+  }
+}
+
+.linkButton {
+  padding: 10px;
+  transition: transform 0.2s ease;
+
+  img {
+    width: 15px;
+  }
+
+  &:hover {
+    transform: translateX(10%);
+  }
 }

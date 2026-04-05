@@ -26,6 +26,7 @@
 }
 
 .sectionImage {
+  width: clamp(80px, 20vw, 120px);
   transform: translateX(-10%);
 }
 
@@ -41,7 +42,7 @@
 }
 
 .label {
-  font-size: 13px;
+  font-size: clamp(13px, 1.7vw, 20px);
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -49,7 +50,7 @@
 .value {
   display: block;
   max-width: 140px;
-  font-size: 14px;
+  font-size: clamp(14px, 1.7vw, 22px);
   text-align: left;
   word-wrap: break-word;
   color: var(--color-value);
@@ -77,5 +78,11 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--box-shadow-hover);
+  }
+}
+
+@media (min-width: 450px) {
+  .section {
+    gap: 2rem;
   }
 }

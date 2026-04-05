@@ -3,6 +3,7 @@ import HomePage from "@pages/Home";
 import type { RootContext } from "@routes/router";
 import { createRoute } from "@tanstack/react-router";
 import {
+  homeSearchParamsSchema,
   searchParamsSchema,
   type SearchParamsType,
 } from "common/validation/searchParams";
@@ -11,7 +12,7 @@ import { appLayoutRoute } from "./appLayout";
 const indexRoute = createRoute({
   getParentRoute: () => appLayoutRoute,
   path: "/",
-  validateSearch: searchParamsSchema,
+  validateSearch: homeSearchParamsSchema,
   component: () => <HomePage />,
   loader: async ({ context, location }) => {
     const { queryClient } = context as RootContext;

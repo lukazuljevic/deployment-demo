@@ -75,6 +75,18 @@ async function main() {
     },
   });
 
+  await prisma.address.create({
+    data: {
+      userId: admin.id,
+      type: AddressType.SHIPPING,
+      street: '123 Main St',
+      city: 'Zagreb',
+      country: 'Croatia',
+      county: 'Splitsko-Dalmatinska',
+      zipcode: '10000',
+    },
+  });
+
   await prisma.userCard.create({
     data: {
       userId: admin.id,

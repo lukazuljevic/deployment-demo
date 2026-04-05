@@ -19,7 +19,7 @@ function App() {
         <InnerApp />
         <Toaster
           containerStyle={{
-            top: 150,
+            top: 10,
             right: 0,
           }}
           toastOptions={{

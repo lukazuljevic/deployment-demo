@@ -1,12 +1,21 @@
-import { useLocalStorage } from "@hooks/useLocalStorage";
-import { type Notification } from "@tstypes/Notification";
+import {
+  addNotification,
+  removeNotifications,
+  useAllNotifications,
+} from "@api/notification";
+import { QueryKeys } from "@api/queryKeys";
+import type { NotificationResponseDto } from "@cart-app/types";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "main";
 import { createContext, type ReactNode } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 interface NotificationsContextType {
-  notifications: Notification[];
-  addNotification: (message: string) => void;
+  notifications: NotificationResponseDto[];
+  isLoading: boolean;
+  isError: boolean;
+  createNotification: (message: string) => void;
   clearNotifications: () => void;
+  refetch: () => void;
 }
 
 export const NotificationsContext = createContext<
@@ -18,28 +27,44 @@ export const NotificationsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [notifications, setNotifications] = useLocalStorage<Notification[]>({
-    key: "notifications",
-    initialValue: [],
+  const { data, isLoading, isError, refetch } = useAllNotifications();
+
+  const notifications: NotificationResponseDto[] = Array.isArray(data)
+    ? data
+    : [];
+
+  const createNotificationMutation = useMutation({
+    mutationFn: (message: string) => addNotification(message),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.NOTIFICIATIONS] });
+    },
   });
 
-  const addNotification = (message: string) => {
-    const newNotification = {
-      id: uuidv4(),
-      message,
-      timestamp: Date.now(),
-    };
+  const clearNotificationsMutation = useMutation({
+    mutationFn: () => removeNotifications(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.NOTIFICIATIONS] });
+    },
+  });
 
-    setNotifications((prev) => [...prev, newNotification]);
+  const createNotification = (message: string) => {
+    createNotificationMutation.mutate(message);
   };
 
   const clearNotifications = () => {
-    setNotifications([]);
+    clearNotificationsMutation.mutate();
   };
 
   return (
     <NotificationsContext.Provider
-      value={{ notifications, addNotification, clearNotifications }}
+      value={{
+        notifications,
+        isLoading,
+        isError,
+        createNotification,
+        clearNotifications,
+        refetch,
+      }}
     >
       {children}
     </NotificationsContext.Provider>

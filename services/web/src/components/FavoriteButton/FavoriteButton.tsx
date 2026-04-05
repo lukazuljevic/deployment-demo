@@ -2,7 +2,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import styles from "./FavoriteButton.module.scss";
 
 interface FavoriteButtonProps {
-  onToggle: () => void;
+  onToggle: (e: React.MouseEvent) => void;
   isFavorite?: boolean;
   disabled: boolean;
 }

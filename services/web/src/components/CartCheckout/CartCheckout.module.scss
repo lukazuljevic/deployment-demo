@@ -1,0 +1,96 @@
+.titleWrapper {
+  width: 100vw;
+  border-bottom: 2px solid var(--color-white-dimmed);
+}
+.title {
+  font-size: 22px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.checkoutContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 20px 10px 80px;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0px 20px;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  title {
+    font-size: 22px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+
+.subtitle {
+  margin-bottom: 8px;
+  font-size: 22px;
+  text-align: left;
+}
+
+.addressInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #7a7a7a;
+  text-align: start;
+}
+
+.paymentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0px 20px;
+
+  h3 {
+    margin: 16px 0px;
+    text-align: start;
+    transform: translateX(-1%);
+  }
+}
+
+.methodButton {
+  display: flex;
+  width: clamp(400px, 30vw, 700px);
+  padding: 10px 20px;
+  border: 2px solid var(--color-white-dimmed);
+  border-radius: var(--border-radius);
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateX(5%);
+  }
+}
+
+.selected {
+  box-shadow: 0px 8px 2px var(--color-orange);
+}
+
+.completeButton {
+  width: clamp(400px, 30vw, 600px);
+  margin-top: 16px;
+  padding: 20px;
+  font-size: 16px;
+  color: white;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-color-brown);
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 8px 4px var(--color-orange);
+  }
+}

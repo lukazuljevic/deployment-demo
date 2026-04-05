@@ -25,3 +25,12 @@ export interface ProfileResponseDto {
   addresses: UserAddressResponseDto[];
   card: UserCardResponseDto;
 }
+
+export interface UserAddressDto {
+  street: string;
+  city: string;
+  zipcode: string;
+  country: string;
+  county: string;
+  type: AddressType;
+}

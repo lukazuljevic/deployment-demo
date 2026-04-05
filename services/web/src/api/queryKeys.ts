@@ -3,5 +3,8 @@ export enum QueryKeys {
   PROFILE = "profile",
   CATEGORIES = "categories",
   PRODUCTS = "products",
+  ORDERS = "orders",
   FAVORITES = "favorites",
+  CART = "cart",
+  NOTIFICIATIONS = "notifications",
 }

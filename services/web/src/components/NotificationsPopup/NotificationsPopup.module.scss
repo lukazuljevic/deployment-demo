@@ -2,7 +2,7 @@
   position: fixed;
   top: 84px;
   left: 0px;
-  width: 100vw;
+  min-width: 100vw;
   height: 100vh;
   z-index: 9999;
   display: flex;
@@ -25,6 +25,13 @@
   }
 }
 
+.popupContent {
+  height: 100vh;
+  padding: 20px 0px 80px;
+  border-top: 2px solid var(--bg-color-brown);
+  overflow-y: scroll;
+}
+
 .exitButton {
   transition: transform 0.2s ease-in-out;
   &:hover {
@@ -36,7 +43,6 @@
   display: flex;
   justify-content: flex-end;
   width: 100vw;
-  padding-right: 20px;
 }
 
 .openButton {

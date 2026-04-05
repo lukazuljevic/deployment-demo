@@ -1,42 +1,65 @@
-import {
+import type {
   ProductColor,
-  type ProductImageResponseDto,
-  type ProductVariantResponseDto,
+  ProductImageResponseDto,
+  ProductVariantResponseDto,
 } from "@cart-app/types";
+import FavoriteButton from "@components/FavoriteButton";
 import ProductColors from "@components/ProductColors";
 import ProductVariant from "@components/ProductVariant";
 import QuantitySelector from "@components/QuantitySelector";
+import useDisableFavorite from "@hooks/disableFavorite";
 import useCart from "@hooks/useCart";
 import useNotifications from "@hooks/useNotifications";
+import { useToggleFavorite } from "@hooks/useToggleFavorite";
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import styles from "./ProductOptions.module.scss";
 
 interface ProductOptionsProps {
+  productId: string;
+  initialFavorite: boolean;
   productName: string;
   productVariants: ProductVariantResponseDto[];
   images: ProductImageResponseDto[];
 }
 
+const CLICK_TIMEOUT = 3000;
+
 const ProductOptions = ({
+  productId,
+  initialFavorite,
   productName,
   images,
   productVariants,
 }: ProductOptionsProps) => {
-  const [selectedColor, setSelectedColor] = useState<
-    ProductColor | undefined
-  >();
-  const [selectedVariant, setSelectedVariant] = useState<string | undefined>();
+  const [selectedColor, setSelectedColor] = useState<ProductColor>();
+  const [selectedVariant, setSelectedVariant] = useState<string>();
   const [quantity, setQuantity] = useState(1);
+  const [isFavorite, setIsFavorite] = useState(initialFavorite);
+
   const { addToCart } = useCart();
-  const { addNotification } = useNotifications();
+  const { createNotification } = useNotifications();
 
-  const handleColorClick = (color: ProductColor) => {
-    setSelectedColor(color);
-  };
+  const { disabledFavorite, disable, enable } = useDisableFavorite();
 
-  const handleVariantSelect = (variantId: string) => {
-    setSelectedVariant(variantId);
+  const toggleFavorite = useToggleFavorite({
+    productId,
+    isFavorite,
+  });
+
+  const handleFavoriteClick = () => {
+    if (disabledFavorite) return;
+
+    disable();
+
+    toggleFavorite.mutate(undefined, {
+      onSuccess: () => setIsFavorite(!isFavorite),
+      onSettled: () => {
+        setTimeout(() => {
+          enable();
+        }, CLICK_TIMEOUT);
+      },
+    });
   };
 
   const selectedVariantObject = useMemo(
@@ -45,30 +68,25 @@ const ProductOptions = ({
   );
 
   const handleAddToCart = () => {
-    if (
-      selectedColor === undefined ||
-      selectedVariant === undefined ||
-      selectedVariantObject === undefined
-    ) {
+    if (!selectedColor || !selectedVariant || !selectedVariantObject) {
       toast.error("You must choose color and size(variant)");
       return;
     }
 
-    const { success, message } = addToCart(
+    addToCart.mutate(
       {
         variantId: selectedVariant,
         color: selectedColor,
         quantity,
       },
-      selectedVariantObject.stock,
+      {
+        onSuccess: () => {
+          createNotification(
+            `Added ${quantity} x ${productName} (${selectedColor.toLowerCase()}) to cart`,
+          );
+        },
+      },
     );
-
-    if (success) {
-      toast.success(message);
-      addNotification(
-        `Added ${quantity} x ${productName} (${selectedColor.toLowerCase()}) to cart`,
-      );
-    } else toast.error(message);
   };
 
   return (
@@ -76,7 +94,7 @@ const ProductOptions = ({
       <div className={styles.colorContainer}>
         <ProductColors
           images={images}
-          onSelectColor={handleColorClick}
+          onSelectColor={setSelectedColor}
           selectedColor={selectedColor}
         />
       </div>
@@ -88,13 +106,25 @@ const ProductOptions = ({
               key={variant.id}
               variant={variant}
               isSelected={variant.id === selectedVariant}
-              onSelect={handleVariantSelect}
+              onSelect={setSelectedVariant}
             />
           ))}
         </div>
-        <button className={styles.submitButton} onClick={handleAddToCart}>
-          Add To Cart
-        </button>
+
+        <div className={styles.wrapper}>
+          <button className={styles.submitButton} onClick={handleAddToCart}>
+            Add To Cart
+          </button>
+
+          <div className={styles.favoriteWrapper}>
+            <FavoriteButton
+              isFavorite={isFavorite}
+              onToggle={handleFavoriteClick}
+              disabled={disabledFavorite}
+            ></FavoriteButton>
+          </div>
+        </div>
+
         <QuantitySelector
           onChange={setQuantity}
           value={quantity}

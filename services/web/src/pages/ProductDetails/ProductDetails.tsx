@@ -10,6 +10,7 @@ import styles from "./ProductDetails.module.scss";
 
 const ProductDetails = () => {
   const product: ProductResponseDto = productRoute.useLoaderData();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -49,6 +50,8 @@ const ProductDetails = () => {
       </div>
       <div className={styles.options}>
         <ProductOptions
+          productId={product.id}
+          initialFavorite={product.isFavorite!}
           productName={`${product.brand} ${product.name}`}
           images={product.images}
           productVariants={product.variants}

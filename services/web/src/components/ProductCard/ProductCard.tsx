@@ -24,7 +24,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const { disabledFavorite, disable, enable } = useDisableFavorite();
 
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (disabledFavorite) return;
 
     disable();

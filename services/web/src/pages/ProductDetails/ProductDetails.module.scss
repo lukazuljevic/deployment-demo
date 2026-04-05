@@ -13,21 +13,21 @@
   padding: 0px 20px;
   background-color: white;
   overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-  }
-
-  scrollbar-width: none;
 }
 
 .imageCarousel {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   align-self: center;
+  width: clamp(350px, 55vw, 550px);
+  min-height: 300px;
+  background-color: var(--product-image-bg);
 }
 .carouselImage {
-  width: clamp(350px, 50vw, 500px);
+  width: 80%;
+  height: 90%;
 }
 
 .prevButton,

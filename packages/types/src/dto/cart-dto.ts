@@ -1,4 +1,4 @@
-import { ClothingSize, ProductColor } from "@prisma/client";
+import { ClothingSize, ProductColor } from "../enums/enum";
 
 export class CartItemResponseDto {
   productId: string;

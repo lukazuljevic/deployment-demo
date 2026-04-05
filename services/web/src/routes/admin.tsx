@@ -1,14 +1,31 @@
+import AdminLayout from "@components/AdminLayout";
 import PrivateRoute from "@components/PrivateRoute";
+import AdminDashboard from "@pages/AdminDashboard";
+import OrdersPage from "@pages/OrdersPage";
 import { createRoute } from "@tanstack/react-router";
-import { appLayoutRoute } from "./appLayout";
+import { ordersParamsSchema } from "@validation/searchParams";
 import { AppPaths } from "./paths";
+import rootRoute from "./root";
 
 export const adminRoute = createRoute({
-  getParentRoute: () => appLayoutRoute,
+  getParentRoute: () => rootRoute,
   path: AppPaths.ADMIN,
   component: () => (
     <PrivateRoute adminOnly>
-      <div>Admin Page</div>
+      <AdminLayout />
     </PrivateRoute>
   ),
+});
+
+export const adminDashboardRoute = createRoute({
+  getParentRoute: () => adminRoute,
+  path: "/",
+  component: () => <AdminDashboard />,
+});
+
+export const adminOrdersRoute = createRoute({
+  getParentRoute: () => adminRoute,
+  path: AppPaths.ADMIN_ORDERS,
+  validateSearch: ordersParamsSchema,
+  component: () => <OrdersPage />,
 });

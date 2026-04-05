@@ -1,0 +1,58 @@
+.card {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  padding: 60px 20px;
+  background-color: var(--product-image-bg);
+  border-radius: var(--border-radius);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding-top: 20px;
+  text-align: start;
+}
+
+.brand {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  margin-top: 32px;
+  color: rgb(196, 52, 52);
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.pdvInfo {
+  font-size: 12px;
+  color: var(--color-white-dimmed);
+}
+
+.shopInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--color-white-dimmed);
+
+  img {
+    width: 12px;
+  }
+}

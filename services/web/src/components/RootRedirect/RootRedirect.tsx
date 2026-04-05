@@ -15,7 +15,6 @@ const RootRedirect = () => {
     if (!isLoggedIn)
       navigate({
         to: loginRoute.id,
-        search: { redirect: location.pathname },
       });
   }, [isLoggedIn]);
 

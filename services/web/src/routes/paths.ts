@@ -6,6 +6,8 @@ export enum AppPaths {
   FAVORITES = "/favorites",
   PROFILE = "/profile",
   ADMIN = "/admin",
+  ADMIN_ORDERS = "orders",
+  CART = "/cart",
   FORBIDDEN = "/forbidden",
   NON_EXSTING = "*",
 }

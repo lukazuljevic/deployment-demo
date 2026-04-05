@@ -1,17 +1,20 @@
 .welcomeScreen {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-width: 100vw;
 }
 
 .startLogo {
-  width: 100px;
+  position: absolute;
+  width: clamp(50px, 20vw, 100px);
   aspect-ratio: 1/1;
 }
 
 .endLogo {
-  display: block;
-  width: 200px;
-  transform: translateY(15%);
+  position: absolute;
+  width: clamp(100px, 40vw, 200px);
+  transform: translateX(30%) translateY(15%);
 }

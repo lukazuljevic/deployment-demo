@@ -4,9 +4,10 @@ import NotFoundPage from "@pages/NotFound/NotFoundPage";
 import rootRoute from "@routes/root";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
-import { adminRoute } from "./admin";
+import { adminDashboardRoute, adminOrdersRoute, adminRoute } from "./admin";
 import { appLayoutRoute } from "./appLayout";
 import { authLayoutRoute, loginRoute, registerRoute } from "./auth";
+import cartRoute from "./cartRoute";
 import favoritesRoute from "./favoritesRoute";
 import { forbiddenRoute } from "./forbidden";
 import indexRoute from "./indexRoute";
@@ -25,12 +26,13 @@ const routeTree = rootRoute.addChildren([
   authLayoutRoute.addChildren([loginRoute, registerRoute]),
   appLayoutRoute.addChildren([
     indexRoute,
-    adminRoute,
     productsRoute.addChildren([productRoute]),
     favoritesRoute,
     profileRoute,
+    cartRoute,
     forbiddenRoute,
   ]),
+  adminRoute.addChildren([adminDashboardRoute, adminOrdersRoute]),
 ]);
 
 const context: RootContext = {

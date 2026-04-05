@@ -17,7 +17,7 @@ const ProductVariant = ({
       className={`${styles.variantButton} ${isSelected ? styles.selected : ""}`}
       onClick={() => onSelect(variant.id)}
     >
-      {variant.shirtSize ?? variant.shoeSize}
+      {variant.clothingSize ?? variant.shoeSize}
     </button>
   );
 };

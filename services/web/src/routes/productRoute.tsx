@@ -15,7 +15,7 @@ export const productsRoute = createRoute({
   path: AppPaths.PRODUCTS,
   validateSearch: searchParamsSchema,
   component: () => <ProductsPage />,
-  loader: async ({ context, location, params }) => {
+  loader: async ({ context, location }) => {
     const { queryClient } = context as RootContext;
 
     const urlSearchParams = new URLSearchParams(location.search);

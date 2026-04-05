@@ -1,4 +1,10 @@
-import { ClothingSize, PaymentMethod, ProductColor } from "../enums/enum";
+import {
+  ClothingSize,
+  OrderStatus,
+  PaymentMethod,
+  ProductColor,
+} from "../enums/enum";
+import { UserAddressDto } from "./user-dto";
 
 export interface MailDto {
   items: MailItem[];
@@ -24,4 +30,16 @@ export interface CartItemDto {
 export interface CreateOrderDto {
   cartItems: CartItemDto[];
   paymentMethod: PaymentMethod;
+}
+
+export interface FindOrdersDto {
+  orderStatus?: OrderStatus;
+}
+
+export class OrderListDto {
+  id: string;
+  totalPrice: number;
+  status: OrderStatus;
+  createdAt: Date;
+  shippingAddress: UserAddressDto;
 }

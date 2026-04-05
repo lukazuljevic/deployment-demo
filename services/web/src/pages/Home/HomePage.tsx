@@ -1,22 +1,21 @@
-import { useProducts } from "@api/products";
-import EmptyState from "@components/EmptyState";
+import { useCategories } from "@api/category";
+import blackHoodie from "@assets/images/homeCollections/blackHoodie.svg";
+import blackShirt from "@assets/images/homeCollections/blakcShirt.svg";
+import grayHoodie from "@assets/images/homeCollections/grayHoodie.svg";
+import streetShirt from "@assets/images/homeCollections/streetShirt.svg";
+import link from "@assets/images/link.svg";
 import FetchError from "@components/FetchError";
+import HomeHeader from "@components/HomeHeader";
+import HomePageProductCard from "@components/HomePageProductCard";
 import LoadingState from "@components/LoadingState";
-import ProductCard from "@components/ProductCard";
-import SearchBar from "@components/SearchBar/SearchBar";
+import useHomePageProducts from "@hooks/useHomePageProducts";
 import useInfiniteScroll from "@hooks/useInfiniteScroll";
-import indexRoute from "@routes/indexRoute";
-import { useNavigate } from "@tanstack/react-router";
+import { productsRoute } from "@routes/productRoute";
+import { Link } from "@tanstack/react-router";
+import { useMemo } from "react";
 import styles from "./HomePage.module.scss";
 
 const HomePage = () => {
-  const search = indexRoute.useSearch();
-  const navigate = useNavigate();
-
-  const filters = {
-    ...search,
-  };
-
   const {
     data,
     fetchNextPage,
@@ -25,7 +24,7 @@ const HomePage = () => {
     isLoading,
     isError,
     refetch,
-  } = useProducts(filters);
+  } = useHomePageProducts();
 
   const ref = useInfiniteScroll({
     fetchNextPage,
@@ -33,44 +32,112 @@ const HomePage = () => {
     isFetchingNextPage,
   });
 
+  const { data: categories } = useCategories();
+
+  const categoriesByName = useMemo(() => {
+    if (!categories) return {};
+
+    return {
+      casual: categories.find((c) => c.name.toLowerCase() === "casual"),
+      formal: categories.find((c) => c.name.toLowerCase() === "formal"),
+      streetwear: categories.find((c) => c.name.toLowerCase() === "streetwear"),
+    };
+  }, [categories]);
+
   const products = data?.pages.flatMap((page) => page.results) ?? [];
 
   if (isError)
     return <FetchError message="Error loading products" onRetry={refetch} />;
 
-  const isEmpty = !isLoading && products.length === 0;
-
-  const handleSearch = (value: string) => {
-    navigate({
-      to: ".",
-      search: (prev) => ({
-        ...prev,
-        search: value,
-      }),
-      replace: true,
-    });
-  };
-
   return (
-    <div className={styles.container}>
-      {isLoading && <LoadingState />}
+    <>
+      <HomeHeader />
+      <div className={styles.container}>
+        {isLoading && <LoadingState />}
 
-      <SearchBar
-        value={search.search || ""}
-        placeholder="Search for..."
-        onSearchChange={handleSearch}
-      />
+        <div className={styles.cardContainer}>
+          <div
+            className={styles.collection}
+            style={{ border: "2px solid gray" }}
+          >
+            <div className={styles.imageWrapper}>
+              <img src={grayHoodie} alt="gray hoodie" />
+              <img src={blackHoodie} alt="black hoodie" />
+            </div>
+            <div className={styles.content} style={{ backgroundColor: "gray" }}>
+              <span>Explore our casual collection</span>
+              <Link
+                to={productsRoute.id}
+                search={{
+                  categoryId: categoriesByName.casual?.id ?? undefined,
+                }}
+                className={styles.card}
+              >
+                <button className={styles.linkButton}>
+                  <img src={link} alt="link button" />
+                </button>
+              </Link>
+            </div>
+          </div>
 
-      {isEmpty && <EmptyState message="No produts found" />}
+          <div
+            className={styles.collection}
+            style={{ border: "2px solid var(--bg-color-brown)" }}
+          >
+            <div className={styles.imageWrapper}>
+              <img src={blackShirt} alt="black shirt" />
+            </div>
+            <div
+              className={styles.content}
+              style={{ backgroundColor: "var(--bg-color-brown)" }}
+            >
+              <span>Be ready for special occasions</span>
+              <Link
+                to={productsRoute.id}
+                search={{
+                  categoryId: categoriesByName.formal?.id ?? undefined,
+                }}
+                className={styles.card}
+              >
+                <button className={styles.linkButton}>
+                  <img src={link} alt="link button" />
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div
+            className={styles.collection}
+            style={{ border: "2px solid var(--color-orange)" }}
+          >
+            <div className={styles.imageWrapper}>
+              <img src={streetShirt} alt="street shirt" />
+            </div>
+            <div
+              className={styles.content}
+              style={{ backgroundColor: "var(--color-orange)" }}
+            >
+              <span>Explore our streetwear collection</span>
+              <Link
+                to={productsRoute.id}
+                search={{
+                  categoryId: categoriesByName.streetwear?.id ?? undefined,
+                }}
+                className={styles.card}
+              >
+                <button className={styles.linkButton}>
+                  <img src={link} alt="link button" />
+                </button>
+              </Link>
+            </div>
+          </div>
+          {products?.map((product) => (
+            <HomePageProductCard key={product.id} product={product} />
+          ))}
+        </div>
 
-      <div className={styles.cardContainer}>
-        {products?.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        <div ref={ref} style={{ height: 1 }} />
       </div>
-
-      <div ref={ref} style={{ height: 1 }} />
-    </div>
+    </>
   );
 };
 

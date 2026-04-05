@@ -10,6 +10,19 @@
   justify-self: flex-start;
 }
 
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.favoriteWrapper {
+  margin-left: 16px;
+  align-self: end;
+  padding: 2.5px 5px 2px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
 .submitButton {
   width: 100%;
   margin-top: 16px;

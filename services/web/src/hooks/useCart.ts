@@ -1,43 +1,37 @@
+import { addCartItem, clearCartItems } from "@api/cart";
+import { QueryKeys } from "@api/queryKeys";
 import { type CartItemDto } from "@cart-app/types";
-import LocalStorage from "@helpers/LocalStorage";
-import { useLocalStorage } from "./useLocalStorage";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const useCart = () => {
-  const [cartItems, setCartItems] = useLocalStorage<CartItemDto[]>({
-    key: LocalStorage.cartkey,
-    initialValue: [],
+  const queryClient = useQueryClient();
+
+  const addItemMutation = useMutation({
+    mutationFn: (item: CartItemDto) => addCartItem(item),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.CART] });
+      toast.success(data.message ?? "Item added to cart");
+    },
+    onError: (error: any) => {
+      toast.error(error || "Something went wrong");
+    },
   });
 
-  const addToCart = (item: CartItemDto, maxStock: number) => {
-    const existingIndex = cartItems.findIndex(
-      (ci) => ci.variantId === item.variantId && ci.color === item.color,
-    );
-
-    let desiredQuantity = item.quantity;
-
-    if (existingIndex !== -1)
-      desiredQuantity += cartItems[existingIndex].quantity;
-
-    if (desiredQuantity > maxStock)
-      return {
-        success: false,
-        message: `You can add only ${maxStock} of this product, you have already added ${cartItems[existingIndex]?.quantity ?? item.quantity}`,
-      };
-
-    if (existingIndex === -1) {
-      setCartItems([...cartItems, item]);
-    } else {
-      const updatedItems = [...cartItems];
-      updatedItems[existingIndex].quantity = desiredQuantity;
-      setCartItems(updatedItems);
-    }
-
-    return { success: true, message: "Added product to cart" };
-  };
+  const clearCart = useMutation({
+    mutationFn: () => clearCartItems(),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.CART] });
+      toast.success(data.message ?? "Cart cleared");
+    },
+    onError: (error: any) => {
+      toast.error(error || "Failed to clear cart");
+    },
+  });
 
   return {
-    addToCart,
-    cartItems,
+    addToCart: addItemMutation,
+    clearCart,
   };
 };
 

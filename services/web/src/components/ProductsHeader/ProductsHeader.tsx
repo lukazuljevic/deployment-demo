@@ -2,15 +2,12 @@ import { SortOrder } from "@cart-app/types";
 import CategoryCard from "@components/CategoryCard";
 import ProductSort from "@components/ProductSort";
 import SearchBar from "@components/SearchBar/SearchBar";
-import useFilterContext from "@hooks/useColorFilter";
 import useProductsPage from "@hooks/useProductsPage";
 import styles from "./ProductHeader.module.scss";
 
 const ProductsHeader = () => {
   const { search, categories, handleSearch, handleCategory, handleSortOrder } =
     useProductsPage();
-
-  const { selectedColors } = useFilterContext();
 
   return (
     <div className={styles.header}>
@@ -28,6 +25,7 @@ const ProductsHeader = () => {
             name={cat.name}
             id={cat.id}
             onSelect={handleCategory}
+            isActive={cat.id === search.categoryId}
           />
         ))}
       </div>
