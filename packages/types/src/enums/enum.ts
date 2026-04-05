@@ -3,7 +3,7 @@ export enum ProductType {
   SHOES = "SHOES",
 }
 
-export enum ShirtSize {
+export enum ClothingSize {
   XS = "XS",
   S = "S",
   M = "M",
@@ -31,4 +31,5 @@ export enum ProductColor {
   GREEN = "GREEN",
   RED = "RED",
   YELLOW = "YELLOW",
+  LEATHER = "LEATHER",
 }

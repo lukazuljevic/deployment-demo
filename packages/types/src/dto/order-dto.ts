@@ -1,4 +1,4 @@
-import { ProductColor, ShirtSize } from "../enums/enum";
+import { ClothingSize, ProductColor } from "../enums/enum";
 
 export interface MailDto {
   items: MailItem[];
@@ -8,7 +8,7 @@ export interface MailDto {
 export interface MailItem {
   productName: string;
   brand: string;
-  size: ShirtSize | number | null;
+  size: ClothingSize | number | null;
   color: ProductColor;
   quantity: number;
   price: number;
