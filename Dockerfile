@@ -12,6 +12,8 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma generate --schema=services/api/prisma/schema.prisma
+
 RUN npm run build
 
 CMD node services/api/dist/src/main.js
