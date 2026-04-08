@@ -30,7 +30,7 @@ RUN npm ci --omit=dev
 
 COPY --from=builder /app/services/api/dist ./services/api/dist
 COPY --from=builder /app/packages/types/dist ./packages/types/dist
-COPY --from=builder /app/services/api/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/services/api/prisma ./services/api/prisma
 
 COPY services/api/docker-entrypoint.sh .
