@@ -2,7 +2,7 @@ import axios, { AxiosError, type AxiosResponse } from "axios";
 import camelcaseKeys from "camelcase-keys";
 import LocalStorage from "common/helpers/LocalStorage";
 
-const BASE_URL = "/api";
+const BASE_URL = "http://localhost:3000/api";
 
 export const api = axios.create({
   baseURL: BASE_URL,
